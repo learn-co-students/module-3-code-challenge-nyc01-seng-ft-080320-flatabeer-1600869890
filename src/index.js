@@ -132,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const review = target.closest('li').textContent
         const reviewDiv = target.closest('div')
         console.log(review, reviewDiv)
+        debugger
     }
 
     clickListner()
