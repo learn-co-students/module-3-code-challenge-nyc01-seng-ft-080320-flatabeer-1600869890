@@ -20,9 +20,10 @@ const renderBeer = (beerObj) => {
     const beerDesc = beerContainer.querySelector('.description').firstElementChild
     const reviewsUl = beerContainer. querySelector('.reviews')
 
+    beerContainer.dataset.id = beerObj.id
     nameH2.textContent = beerObj.name 
     beerImage.src = beerObj.image_url
-    beerDesc.dataset.id = beerObj.id
+    // beerDesc.dataset.id = beerObj.id
     beerDesc.value = beerObj.description
     reviewsUl.innerHTML = ''
 
@@ -49,7 +50,7 @@ const clickHandler = () => {
 const updateBeerDescription = () => {
     const descForm = document.querySelector('.description')
     const currentDescNode = descForm.firstElementChild
-    const beerId = descForm.firstElementChild.dataset.id
+    const beerId = descForm.parentElement.dataset.id
 
     sendPatchRequest(beerId, currentDescNode)
 }
@@ -81,10 +82,32 @@ const submitReview = () => {
 
 const renderReview = (review) => {
     const reviewsUl = document.querySelector('.reviews')
+    const beerId = reviewsUl.parentElement.dataset.id
     const newReviewLi = document.createElement('li')
     newReviewLi.textContent = review
+
     reviewsUl.prepend(newReviewLi)
+
+    // get the array of reviews from the DOM
+    // const reviews = getReviews(reviewsUl)
+
+    // create a PATCH request
+    // capture the response
+    // rerender the reviews/ beer info
+
+    
 }
+
+// const getReviews = (reviewsNode) => {
+//     const reviewsArray = []
+//     const reviewsCollection = reviewsNode.querySelectorAll('li')
+
+//     for (const el in reviewsCollection){
+//         // console.log(node)
+//         reviewsArray.push(el.textContent)
+//     }
+//     console.log(reviewsArray)
+// }
 
 
 /*As a user, I can:
