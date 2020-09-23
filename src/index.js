@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', e=>{
     submitHandler();
 })
 
+
 function getFirstBeer(){
     fetch(BASE_URL + 1)
     .then(resp => resp.json())
@@ -17,7 +18,7 @@ function renderBeer(beer){
         <img src="${beer.image_url}">
 
         <form class="description" data-beer-id=${beer.id}>
-          <textarea name="description">${beer.description}</textarea>
+          <textarea id="change" name="description"></textarea>
           <button>Update Beer</button>
         </form>
 
@@ -31,8 +32,9 @@ function renderBeer(beer){
         <ul class="reviews">
         </ul>`;
     detailContainer.innerHTML=(beerBody);
+    detailContainer.querySelector("textarea").textContent = beer.description
     const reviewList = detailContainer.querySelector(".reviews");
-    for (review of beer.reviews){
+    for (let review of beer.reviews){
         reviewList.append(renderReview(review))
     };
 }
@@ -43,44 +45,40 @@ function renderReview(review){
     return reviewLi
 }
 
+
 function submitHandler(){
     document.addEventListener('submit', e=>{
         e.preventDefault();
         if (e.target.classList.contains("description")){
             updateBeer(e.target)
         }else if(e.target.classList.contains("review-form")){
-            console.log("review")
+            review(e.target)
         }
+
+
+
         
+
     })
+};
+
+function review(form) {
+    console.log(document.querySelector(".review-form"))
 }
 
-function updateBeer(form){
-    const newDescription = form.description.textContent
-    const beerId = form.dataset.beerId
+function updateBeer(newStuff){
+    console.log(newStuff.innerHTML)
+    
+    
+    const beerId = newStuff.dataset.beerId
     const configuration = {
-        method: "POST",
-        headers: {"content-type": "application/json"}
+        method: "PATCH",
+        headers: {"content-type": "application/json",
+                    "accepts": "application/json"},
+        body: JSON.stringify({description: newDescription})
     }
+    
+    // fetch(BASE_URL + beerId, configuration)
+    // .then(resp => resp.json())
+    // .then(console.log)
 }
-
-
-// <h2>Beer Name Goes Here</h2>
-//         <img src="assets/image-placeholder.jpg">
-
-//         <form class="description">
-//           <textarea>Beer description goes here</textarea>
-//           <button>Update Beer</button>
-//         </form>
-
-//         <h3>Leave a Review</h3>
-//         <form class="review-form">
-//           <textarea></textarea>
-//           <input type="submit" value="Submit">
-//         </form>
-
-//         <h3>Customer Reviews</h3>
-//         <ul class="reviews">
-//           <li>Replace with actual reviews</li>
-//           <li>From the server</li>
-//         </ul>
