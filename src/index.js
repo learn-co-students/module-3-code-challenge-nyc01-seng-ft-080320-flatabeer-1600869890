@@ -16,23 +16,23 @@ document.addEventListener("DOMContentLoaded", () => {
         newBeerDiv.dataset.beerId = beer.id
 
         newBeerDiv.innerHTML = `
-        <h2>${beer.name}</h2>
-        <img src="${beer.image_url}">
+            <h2>${beer.name}</h2>
+            <img src="${beer.image_url}">
 
-        <form class="description">
-          <textarea class="beer-description">${beer.description}</textarea>
-          <button class="update-beer">Update Beer</button>
-        </form>
+            <form class="description">
+            <textarea class="beer-description">${beer.description}</textarea>
+            <button class="update-beer">Update Beer</button>
+            </form>
 
-        <h3>Leave a Review</h3>
-        <form class="review-form">
-          <textarea></textarea>
-          <input type="submit" value="Submit">
-        </form>
-        <h3>Customer Reviews</h3>
-        <ul class="reviews">
-          
-        </ul>
+            <h3>Leave a Review</h3>
+            <form class="review-form">
+            <textarea></textarea>
+            <input type="submit" value="Submit">
+            </form>
+            <h3>Customer Reviews</h3>
+            <ul class="reviews">
+            
+            </ul>
        
         `
         
@@ -47,45 +47,49 @@ document.addEventListener("DOMContentLoaded", () => {
            reviewLi.innerText = review
            beerUl.append(reviewLi)
         }
-
     }
 
-    const clickHandler= () => {
+    const clickHandler = () => {
         document.addEventListener('click', e => {
             if(e.target.matches('.update-beer')){
                 e.preventDefault()
-                updateReview(e.target)
+                updateDescription(e.target)
             }
         })
-
     }
 
     const submitHandler = () => {
         document.addEventListener('submit', e => {
             if(e.target.matches('.review-form')){
                 e.preventDefault()
-                const form = e.target
-                const review = form.querySelector('textarea')
-                const newReviewLi = document.createElement('li')
-                newReviewLi.innerText = review.value
-                const reviewUl = document.querySelector('.reviews')
-                reviewUl.append(newReviewLi)
-                form.reset()
+                addReview(e.target)
             }
-
         })
-       
-
     }
-    const updateReview = el => {
-        const beerId = el.parentElement.parentElement.dataset.beerId
 
-        //get new review and update beer.reveiew
+    const addReview = el => {
+        const form = el
+        // const beerDiv = form.parentElement
+        // const beerId = beerDiv.id
+
+        const review = form.querySelector('textarea')
+
+        const newReviewLi = document.createElement('li')
+        newReviewLi.innerText = review.value
+        const reviewUl = document.querySelector('.reviews')
+        reviewUl.append(newReviewLi)
+        form.reset()
+    }
+
+    const updateDescription = el => {
+        const beerId = el.parentElement.parentElement.dataset.beerId
         
         const textArea = el.parentElement.querySelector('textarea')
+
         const beerObj = {
             description: textArea.value
         }
+
         const options = {
             method: "PATCH",
             headers: {
@@ -94,6 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             body: JSON.stringify(beerObj)
         }
+
         fetch(url+beerId, options)
         .then(response => response.json())
         .then(beer => {
@@ -108,4 +113,5 @@ document.addEventListener("DOMContentLoaded", () => {
     clickHandler()
     submitHandler()
     getAndDisplayBeer()
+
 })
