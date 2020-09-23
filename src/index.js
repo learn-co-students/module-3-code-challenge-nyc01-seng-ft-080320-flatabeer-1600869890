@@ -41,14 +41,44 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault()
             if(e.target.matches('.description')){
                 updateDescription(e.target)
+            }else if(e.target.matches('.review-form')){
+                newReview(e.target)
             }
         })
     }
 
+    const newReview = target => {
+        const form = target
+        const textArea = target.querySelector('textarea')
+        const newReview = textArea.value
+
+        const reviewUl = document.querySelector('.reviews')
+        const li = document.createElement('li')
+        li.textContent = newReview
+        reviewUl.append(li)    
+    }
+
     const updateDescription = target => {
         const form = target
-        const newDescription = target.querySelector('textarea')
-        console.log(newDescription)
+        const textArea = target.querySelector('textarea')
+        const newDescription = textArea.value
+        
+        description = {
+            description: newDescription
+        }
+
+        let options = {
+            method: "PATCH",
+            headers: {
+                "content-type": "application/json",
+                "accept": "application/json"
+            },
+            body: JSON.stringify(description)
+        }
+
+        fetch(`http://localhost:3000/beers/1`, options)
+        .then(resp => resp.json())
+        .then(beer => renderBeer(beer))
     }
 
     submitListner()
