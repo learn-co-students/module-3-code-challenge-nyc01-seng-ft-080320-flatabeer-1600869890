@@ -1,4 +1,6 @@
 //experimental:
+// I I wanted to make a object to mirror the reviews DS and try to sync in with the DB but did not get past
+// pushing the reviews data in the hash reviews whcih should have key pair of beerId(id) to the array of reviews;
 
 function ReviewBoi(id = null) {
     this.id = id;
