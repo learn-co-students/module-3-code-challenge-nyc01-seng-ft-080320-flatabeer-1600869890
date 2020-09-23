@@ -17,8 +17,18 @@ const render = beer =>{
     let img = document.getElementsByTagName('img')
     img[0].src = beer.image_url
     
-    const form = document.querySelector(".description")
-    form.textContent = beer.description 
+    const descriptionForm = document.querySelector(".description")
+    descriptionForm[0].innerText = beer.description
+    // descriptionForm.textContent = beer.description 
 
+    const reviews = beer.reviews
+    const revUl = document.querySelector(".reviews") 
+    reviews.forEach(review => {
+        const revLi = document.createElement('li')
+        revLi.innerText = review
+        revUl.append(revLi)
+    });
+        
     
+
 }
