@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", e => {
 
      const beerDetails = document.querySelector('.beer-details')
      const beerForm = document.querySelector('.description')
+     // const main = document.querySelector('main')
+     const reviewsUl = document.querySelector(".reviews")
 
 
 function fetchFirstBeer() {
@@ -10,63 +12,73 @@ function fetchFirstBeer() {
      .then(beer => { 
           renderBeerHeader(beer)
           renderBeerForm(beer)
-
+          renderBeerReviews(beer)
      })
 }
 
 
 
-// function renderBeerHeader(beer){
-//      beerDetailsHeader.innerHTML = `
-//       <h2>${beer.name}</h2>
-//      <img src="${beer.image_url}">`
-// }
+function renderBeerHeader(beer){
+     const headerDiv = document.createElement('div')
+     headerDiv.innerHTML = `
+     <h2>${beer.name}</h2>
+    <img src="${beer.image_url}"> `
+    beerDetails.prepend(headerDiv)
+  }
 
-// function renderBeerForm(beer){
-//      beerForm.innerHTML = `
-//           <form>
-//           <textarea> ${beer.description}</textarea>
-//           <button>Update Beer</button>
-//         </form> `
+
+
+
+function renderBeerForm(beer){
+     beerForm.innerHTML = `
+     <form class="description">
+     <textarea>${beer.description}</textarea>
+     <button>Update Beer</button>
+   </form> `
+     }
+
+function submitHandler(){
+     beerForm.addEventListener('submit', e => {
+          e.preventDefault()
+          
+
+
+
+
+     })
+
+
+}
+
+
+
+
+// function renderBeerReviews(beer){
+//      for(let review of beer) {
+//           const reviewLi = document.createElement('li')
+//           reviewLi.textContent = `${beer.review}`
+//           reviewsUl.append(reviewLi)
+//           }
 //      }
 
 
-function renderBeerHeader(beer) {
-     beerDetails.innerHTML = ` 
-     <div class="beer-details">
-        <h2>${beer.name}</h2>
-        <img src="${beer.image_url}">
-        `
-}
 
-function renderBeerForm(beer) {
-     beerForm.innerHTML = `      
-        <form class="description">
-          <textarea>${beer.description}</textarea>
-          <button>Update Beer</button>
-        </form>
-        `
-}
+
+
+// submitHandler('submit', e => {
+// target update  button 
+// // get info from form 
+// // patch
 
 
 
 
+// target review submit button 
+// get info from review section 
+// append review lis to reviews section 
 
 
-
-submitHandler('submit', e => {
-target update  button 
-// get info from form 
-// patch
-
-
-
-
-target review submit button 
-append review lis to reviews section 
-
-
-})
+// })
 
 
 
@@ -84,7 +96,7 @@ append review lis to reviews section
 
 
 
-
+submitHandler()
 fetchFirstBeer()
 
 })
