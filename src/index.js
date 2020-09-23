@@ -69,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         reviewUl.append(div)
         
         updateReviews(newReview)
+        form.reset()
     }
 
     const updateReviews = (newReview) => {
