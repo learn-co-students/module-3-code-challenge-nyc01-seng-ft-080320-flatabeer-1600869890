@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainBody = document.querySelector('main')
     const updateForm = document.querySelector('.description')
     let reviewForm = document.querySelector('.review-form')
+    let beerReviews = []
     
 
     function getFirstBeer() {
@@ -12,6 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(beer => {
             mainBody.innerHTML = ''
             renderBeer(beer)
+            beer.reviews.forEach (review => {
+                beerReviews.push(review)
+            })
         })
     }
 
@@ -36,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <h3>Customer Reviews</h3>
         <ul class="reviews" data-id="${beer.id}">
           ${beer.reviews.map (review => {
-            return `<li> ${review} </li>`}).join('')}
+            return `<li> ${review} <button id="delete">X</button></li>`}).join('')}
         </ul>
         `
         mainBody.append(newDiv)
@@ -64,14 +68,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function leaveComment(commentForm) {
         let newLi = document.createElement('li')
+        let newBtn = document.createElement('button')
+        newBtn.textContent = "X"
+        newBtn.id = "delete"
         let reviews = document.querySelector('.reviews')
         let reviewContent = commentForm.querySelector('#comment-text-area')
         newLi.textContent = reviewContent.value
+        newLi.appendChild(newBtn)
         reviews.appendChild(newLi)
         commentForm.reset();
     }
 
-    clickHandler = () => {
+    submitHandler = () => {
         document.addEventListener('submit', e => {
             e.preventDefault();
             if (e.target.matches('.description')) {
@@ -82,6 +90,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
     }
+    clickHandler = () => {
+        document.addEventListener('click', e => {
+            if (e.target.matches('#delete')) {
+                e.target.parentElement.remove();
+            }
+        })
+    }
     clickHandler();
+    submitHandler();
     getFirstBeer();
 })
