@@ -16,35 +16,20 @@ document.addEventListener("DOMContentLoaded", () =>{
     };
 
     const renderBeer = (beer) => {
-        const beerInfo = createElement("div")
-        beerInfo.dataset.id = beer.id
-        beerInfo.classList.add("beer-info")
-
-        beerInfo.innerHTML = `
-    
-        `
         const beerDetails = document.querySelector(".beer-details")
         beerDetails.dataset.id = beer.id
-       name = document.querySelector("h2 > div")
-       image = document.querySelector("img > div")
-       name.innerHTML = `
+       beerName = document.getElementsByTagName("h2")
+       beerImage = document.getElementsByTagName("img")
+       console.log(beerName) 
+       beerName.innerHTML = `
         ${beer.name}
        `
-       image.innerHTML = `
-        ${beer.imgageUrl}
-       `
     }
 
-    beerDetails
+    
 
-    const clickHandler = () => {
-        document.addEventListener("click", e => {
-            if (e.target.textContent === "update beer") {
-                const 
-            }
+      
 
-        })
-    }
 fetchBeer();
 });
 
