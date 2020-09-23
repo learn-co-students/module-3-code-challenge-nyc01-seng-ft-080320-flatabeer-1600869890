@@ -11,8 +11,17 @@ document.addEventListener('DOMContentLoaded', e => {
         document.querySelector('h2').textContent = beer.name
         document.querySelector('img').src = beer.image_url
         document.querySelector('textarea').textContent = beer.description
-        document.querySelector('.reviews li').textContent = beer.reviews
+        
+        for(const review of beer.reviews){
+            const reviewLi = document.createElement('li')
+            reviewLi.innerText = review
+            addReviews(reviewLi)  
+        }
+    }
 
+    const addReviews = (reviewLi) => {
+        const reviewsBox = document.querySelector('.reviews li')
+        reviewsBox.append(reviewLi)
     }
 
     const submitHandler = () => {
