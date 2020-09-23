@@ -65,6 +65,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
         _main.addEventListener('click', () =>{
             event.preventDefault()
 
+            // Because I used textContent == Update Beer if you enter Update Beer you lock yourself from being able to UPDATE
+            // Will use class next time could not redo in time
                 if(event.target.textContent == 'Update Beer'){
                     console.log("btn text")
                     const beerDescription = {
@@ -84,8 +86,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 }
                 
             
-
-           
+                // ran out of time
+                // need do a seperate fetch for reviews in order to add new review to the array of reviews
                 if(event.target.id == 'Submitbtn'){
                     console.log("btn working")
                     const newReview = {
