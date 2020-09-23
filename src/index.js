@@ -1,10 +1,38 @@
 document.addEventListener('DOMContentLoaded', e => {
   const baseURL = 'http:localhost:3000/beers';
   const reviewUl = document.querySelector('.reviews');
+  const beerListUl = document.querySelector('nav').firstElementChild;
   const headers = {
     "Content-Type": "application/json",
     "Accept": "application/json"
   };
+
+  const fetchBeerList = () => {
+    fetch(baseURL)
+      .then(resp => resp.json())
+      .then(json => renderBeerList(json));
+  };
+
+  const renderBeerList = (beers) => {
+    removeBeerNames();
+    for (let beer of beers) {
+      renderBeerName(beer);
+    }
+  };
+
+  const renderBeerName = (beer) => {
+    const newBeerName = document.createElement('li');
+    newBeerName.dataset.beerId = beer.id;
+    newBeerName.textContent = beer.name;
+
+    beerListUl.append(newBeerName);
+  };
+
+  const removeBeerNames = () => {
+    while (beerListUl.firstElementChild) {
+      beerListUl.firstElementChild.remove();
+    }
+  }
 
   const fetchBeer = (beerId) => {
     fetch(`${baseURL}/${beerId}`)
@@ -126,6 +154,8 @@ document.addEventListener('DOMContentLoaded', e => {
         } else if (e.target.matches('.delete')) {
           deleteReview(e.target.dataset.reviewIndex);
         }
+      } else if (e.target.matches('li') && e.target.parentElement === beerListUl) {
+        fetchBeer(parseInt(e.target.dataset.beerId, 10));
       }
     });
 
@@ -136,6 +166,7 @@ document.addEventListener('DOMContentLoaded', e => {
     });
   };
 
+  fetchBeerList();
   fetchBeer(1);
   clickHandler();
 

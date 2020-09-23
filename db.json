@@ -49,7 +49,8 @@
       "image_url": "https://images.punkapi.com/v2/7.png",
       "reviews": [
         "I lost my pet squirrel to this beer",
-        "Where's the beef?!"
+        "Where's the beef?!",
+        "Also where's the garlic?"
       ]
     },
     {
@@ -74,7 +75,7 @@
     {
       "id": 8,
       "name": "Misspent Youth",
-      "description": "The brainchild of our small batch brewer, George Woods. A dangerously drinkable milk sugar- infused Scotch Ale.",
+      "description": "The brainchild of our giant batch brewer, George Woods. A dangerously drinkable milk sugar- infused Scotch Ale.",
       "image_url": "https://images.punkapi.com/v2/keg.png",
       "reviews": [
         "Woe is me, how I long for the days of yore",
