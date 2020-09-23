@@ -9,20 +9,56 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.target.matches(".description")) {
             patchDescription(e.target)
         } else if (e.target.matches(".review-form")) {
-            addReview(e.target)
+            patchReview(e.target)
             e.target.reset()
         }
     })
 
-    const addReview = reviewForm => {
-        const newReviewText = document.getElementById("review-area").value
-        console.log(newReviewText)
+    // const addReview = reviewForm => {
+    //     const newReviewText = document.getElementById("review-area").value
 
-        // no persistance
-        const reviewUl = document.querySelector(".reviews")
-        const reviewLi = document.createElement("li")
-        reviewLi.textContent = newReviewText
-        reviewUl.append(reviewLi)
+    //     // no persistance
+    //     // const reviewUl = document.querySelector(".reviews")
+    //     // const reviewLi = document.createElement("li")
+    //     // reviewLi.textContent = newReviewText
+    //     // reviewUl.append(reviewLi)
+    // }
+
+    const patchReview = reviewForm => {
+        const newReview = document.getElementById("review-area").value
+        const beerId = reviewForm.dataset.beer_id
+
+        fetch(BEERS_URL+beerId)
+        .then(response => response.json())
+        .then(beer => {
+            const revObj = makeReviewObj(beer, newReview)
+            patchReviews(revObj, beer)
+        })
+    }
+
+    const patchReviews = (revObj, beer) => {
+
+        const fetchOptions = {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Accepts": "application/json"
+            },
+            body: JSON.stringify(revObj)
+        }
+
+        fetch(BEERS_URL+beer.id, fetchOptions)
+        .then(response => response.json())
+        .then(renderBeer)
+    }
+
+    const makeReviewObj = (beer, newReview) => {
+        const oldReviews = beer.reviews
+        oldReviews.push(newReview)
+        const reviewObj = {
+            reviews: oldReviews
+        }
+        return reviewObj
     }
 
     const patchDescription = beerForm => {
@@ -79,6 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const appendReviews = (beerObj, beerDiv) => {
         const reviewUl = beerDiv.querySelector("ul")
+        // clear out Uls
         const reviews = beerObj.reviews
         for (const review of reviews) {
             let reviewLi = document.createElement("li")
