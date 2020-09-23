@@ -72,6 +72,13 @@ function setupSubmitHandlers(){
         }else if(e.target.matches('form.review-form')){
             e.preventDefault();
             console.log('submitting a review....');
+
+            const reviewsList = e.target.parentElement.querySelector('ul.reviews');
+
+            const review = e.target.querySelector('textarea').value;
+            if (review != ""){
+                reviewsList.appendChild(renderReview(review));
+            }
         }
     })
 }
