@@ -58,9 +58,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const newReview = textArea.value
 
         const reviewUl = document.querySelector('.reviews')
-        const li = document.createElement('li')
-        li.textContent = newReview
-        reviewUl.append(li)
+        // const li = document.createElement('li')
+        // li.textContent = newReview
+
+        // reviewUl.append(li)
+        const div = document.createElement('div')
+        div.innerHTML =`
+            <li>${newReview} <button>delete</button> </li>
+        `
+        reviewUl.append(div)
         
         updateReviews(newReview)
     }
