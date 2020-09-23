@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const url = "http://localhost:3000/beers/"
     const getAndDisplayBeer = () => {
-        fetch("http://localhost:3000/beers/1")
+        fetch(url + "1")
         .then(response => response.json())
         .then(beer => {
             renderBeer(beer)
@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const clickHandler = () => {
         document.addEventListener('click', e => {
             if(e.target.matches('.update-beer')){
+                //was refreshing the page without this
                 e.preventDefault()
                 updateDescription(e.target)
             }
