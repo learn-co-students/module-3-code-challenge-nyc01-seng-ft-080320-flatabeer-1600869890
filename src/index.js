@@ -18,8 +18,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     const renderBeer = (beer) => {
         
-
-
         const beerDetails = document.createElement("div")
 
         // html for beer details
@@ -66,14 +64,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
             event.preventDefault()
 
             // Because I used textContent == Update Beer if you enter Update Beer you lock yourself from being able to UPDATE
-            // Will use class next time could not redo in time
+            // Better practice is to use class or a dataset ID could not redo in time
                 if(event.target.textContent == 'Update Beer'){
                     console.log("btn text")
                     const beerDescription = {
                         description: event.target.textContent
                     }
                     
-                    const options = {
+                    let options = {
                         method: "PATCH",
                         headers: {
                             'Content-Type': 'application/json'
@@ -94,7 +92,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                         reviews: document.getElementById('reviewtext').value
                     }
                     
-                    const options = {
+                    let options = {
                         method: "PATCH",
                         headers: {
                             'Content-Type': 'application/json'
