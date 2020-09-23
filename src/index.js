@@ -67,8 +67,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
             // Better practice is to use class or a dataset ID could not redo in time
                 if(event.target.textContent == 'Update Beer'){
                     console.log("btn text")
+
                     const beerDescription = {
-                        description: event.target.textContent
+                        description: document.getElementById('form-description').value
                     }
                     
                     let options = {
@@ -88,6 +89,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 // need do a seperate fetch for reviews in order to add new review to the array of reviews
                 if(event.target.id == 'Submitbtn'){
                     console.log("btn working")
+
+                    
                     const newReview = {
                         reviews: document.getElementById('reviewtext').value
                     }
