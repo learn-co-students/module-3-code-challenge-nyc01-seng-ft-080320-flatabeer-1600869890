@@ -65,6 +65,7 @@ const urlBeer1 = "http://localhost:3000/beers/1"
         //add a submit handle for the reviews
             } else if(e.target.matches('.review-form')) {
                 postNewReview(e.target)
+                e.target.reset();
             }
         })
     }
