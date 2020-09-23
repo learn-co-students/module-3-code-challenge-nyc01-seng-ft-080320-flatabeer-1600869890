@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 const baseUrl = 'http://localhost:3000/beers/'
 const firstBeer = 1
+
+
     
     const fetchBeer = () => {
         fetch(baseUrl + firstBeer)
@@ -21,7 +23,7 @@ const firstBeer = 1
         const descButton = beerDescForm.querySelector('button')
         descButton.id = "update-beer-button"
         descButton.type = "submit"
-
+        
 
         renderReviews(beer)
     }
@@ -44,6 +46,7 @@ const firstBeer = 1
         form.addEventListener('submit', e => {
             e.preventDefault();
             const form = e.target
+            
             patchDesc(form)
 
             })
@@ -51,22 +54,33 @@ const firstBeer = 1
 
     const patchDesc = form => {
         const objId = form.dataset.id
-        objDesc = form.querySelector('textarea')
-        
-    //     const options = {
-    //         method: "PATCH",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             "Accept" : "application/json"
-    //         },
-    //         body: JSON.stringify{(e.)}
-    //     }
+        const objDesc = form.querySelector('textarea')
+        const objUpdate = { description: objDesc.value }
+
+    
+
+        const options = {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept" : "application/json"
+            },
+            body: JSON.stringify(objUpdate)
+        }
+
+        fetch(baseUrl + objId, options )
+        .then(res => res.json())
+        .then(data => fetchBeer())
+
     }
 
+    const addReview = () => {
+        console.log('fuck this')
+    }
 
      
    
-
+    addReview();
     submitHandler();
     fetchBeer();
 
