@@ -102,52 +102,54 @@ const urlBeer1 = "http://localhost:3000/beers/1"
     
     //function to post a new review on DOM
     //no persistence required
-    const postNewReview = form => {
+    // const postNewReview = form => {
         
-        const newReview = form.review.value;
+    //     const newReview = form.review.value;
 
-        const reviewList = document.querySelector(".reviews");
-        const reviewLi = document.createElement('li');
-        reviewLi.textContent = newReview;
+    //     const reviewList = document.querySelector(".reviews");
+    //     const reviewLi = document.createElement('li');
+    //     reviewLi.textContent = newReview;
 
-        reviewList.prepend(reviewLi);
+    //     reviewList.prepend(reviewLi);
 
-    }
+    // }
 
     //Review Persistence Attmept
-    // const postNewReview = form => {
-    //     const currentReviews = []
-    //     const newReview = form.review.value;
-    //     const beerDiv = form.parentElement;
-    //     const reviewUl = beerDiv.querySelector('ul');
-    //     const reviewLis = reviewUl.children
-    //     for (const review of reviewLis) {
-    //         currentReviews.push(review.textContent);
-    //     }
+    const postNewReview = form => {
+        const currentReviews = []
+        const newReview = form.review.value;
+        const beerDiv = form.parentElement;
+        const reviewUl = beerDiv.querySelector('ul');
+        const reviewLis = reviewUl.children
+        for (const review of reviewLis) {
+            currentReviews.push(review.textContent);
+        }
         
-    //     currentReviews.unshift(newReview);
+        currentReviews.unshift(newReview);
 
-    //     //console.log(currentReviews);
-    //     const options = {
-    //         method: "PATCH",
-    //         headers: {
-    //             "content-type": "application/json",
-    //             "accept": "application/json"
-    //         },
-    //         body: JSON.stringify({
-    //             reviews: currentReviews
-    //         })
-    //     }
-    //     fetch(urlBeer1, options)
-    //     .then(response => response.json())
-    //     .then(updatedReviews => {
+        //console.log(currentReviews);
+        const options = {
+            method: "PATCH",
+            headers: {
+                "content-type": "application/json",
+                "accept": "application/json"
+            },
+            body: JSON.stringify({
+                reviews: currentReviews
+            })
+        }
+        fetch(urlBeer1, options)
+        .then(response => response.json())
+        .then(updatedReviews => {
+            removePreviousLis();
+            renderReviews(updatedReviews);
+        })
+    }
 
-    //     })
-    // }
-
-    // const removePreviousLis = () => {
-    //     const ul = document.querySelector('ul')
-    // }
+    const removePreviousLis = () => {
+        const ul = document.querySelector('ul.reviews');
+        ul.innerHTML = "";
+    }
 
 
 
