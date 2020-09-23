@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () =>{
 
     const fetchBeer = () => {
         fetch(baseUrl)
-
         .then(res => res.json())
         .then(data => renderBeers(data))
     }
@@ -18,12 +17,33 @@ document.addEventListener("DOMContentLoaded", () =>{
     const renderBeer = (beer) => {
         const beerDetails = document.querySelector(".beer-details")
         beerDetails.dataset.id = beer.id
-       beerName = document.getElementsByTagName("h2")
-       beerImage = document.getElementsByTagName("img")
-       console.log(beerName) 
+        beerName = document.getElementsByTagName("h2")
+        beerImage = document.getElementsByTagName("img")
+       
        beerName.innerHTML = `
-        ${beer.name}
+         ${beer.name} 
        `
+       beerimage.innerHTML = `
+       
+       `
+    }  
+    
+    const submitHandler = (beerReview) => {
+        document.querySelector("")
+        document.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const beerForm = e.target
+
+            let options = {
+                method: "Post",
+                headers: {
+                    "content-type": "application/json",
+                    "accept": "application.json"
+                },
+                body: JSON.stringify
+
+            }
+        })
     }
 
     
