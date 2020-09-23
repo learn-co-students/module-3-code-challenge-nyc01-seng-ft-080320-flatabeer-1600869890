@@ -14,6 +14,50 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     })
 
+    document.addEventListener("click", (e) => {
+        if (e.target.matches(".delete-review")) {
+            const beer_id = e.target.dataset.beer_id
+            deleteReview(e.target.parentElement, beer_id)
+        }
+    })
+
+    const deleteReview = (el, beerId) => {
+        const reviewIndex = parseInt(el.dataset.num)
+
+        fetch(BEERS_URL+beerId)
+        .then(response => response.json())
+        .then(beer => {
+           let reviews = beer.reviews
+           reviews.splice(reviewIndex, 1)
+           deletePatch(reviews, beerId)
+        })
+
+
+    }
+    
+    const deletePatch = (reviews, beerId) => {
+
+        const reviewObj = {
+            reviews: reviews
+        }
+
+        fetchOptions = {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Accepts": "application/json"
+            },
+            body: JSON.stringify(reviewObj)
+        }
+
+        fetch(BEERS_URL+beerId, fetchOptions)
+        .then(response => response.json())
+        .then(obj => {
+            const beerInt = parseInt(beerId)
+            getBeer(beerInt)
+        })
+    }
+
     // const addReview = reviewForm => {
     //     const newReviewText = document.getElementById("review-area").value
 
@@ -115,15 +159,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const appendReviews = (beerObj, beerDiv) => {
         const reviewUl = beerDiv.querySelector("ul")
-        // clear out Uls
         const reviews = beerObj.reviews
+        let count = 0
         for (const review of reviews) {
             let reviewLi = document.createElement("li")
             reviewLi.textContent = review
+            reviewLi.dataset.num = count
+            let button = document.createElement("button")
+            button.classList.add("delete-review")
+            button.textContent = "Delete Review"
+            button.dataset.beer_id = beerObj.id
+            reviewLi.append(button)
             reviewUl.append(reviewLi)
+            count++
         }
     }
 
 
-    getBeer(1);
+    getBeer(2);
 })
