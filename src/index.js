@@ -11,6 +11,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         .then(beer =>  renderBeer(beer))
     }
 
+    const fetchBeerSelection = () => {
+        fetch(baseUrl)
+        .then(res => res.json())
+        .then(beer =>  renderBeerNames(beer))
+    }
+
+
     const patchDescription = (beerId, newDescription) => {
         const options = {
             method: "PATCH",
@@ -51,6 +58,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     
     }
 
+    const renderBeerNames = beerNameArr => {
+        const beerNamesUl = document.querySelector(".beer-selection")
+        beerNameArr.forEach(beer => {
+            const beerNameLi = document.createElement('li')
+            beerNameLi.textContent = beer.name
+            beerNameLi.className = "beers"
+            beerNameLi.dataset.id = beer.id
+            beerNamesUl.appendChild(beerNameLi)
+        })
+    }
+
 
     const renderBeer = beerObj => {
         const beerDiv = document.querySelector('.beer-details')
@@ -67,7 +85,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         beerObj.reviews.forEach(review => {
             const reviewLi = document.createElement('li')
-            reviewLi.innerHTML = `${review} <button class="delete"> </button>`
+            reviewLi.innerHTML = `${review} <button class="delete"></button>`
             reviewsUl.appendChild(reviewLi)
         })
     }
@@ -114,6 +132,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     })
 
+    fetchData(beerId)
     document.addEventListener('click', e => {
         if (e.target.matches(".delete")) {
             const beerId = document.querySelector('.beer-details').children[0].getAttribute('data-id')
@@ -124,8 +143,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
             patchReview(beerId, getReviews())
 
         }
+
+        if (e.target.matches(".beers")) {
+            console.log(e.target)
+            const beerId= e.target.getAttribute('data-id')
+            fetchData(beerId)
+
+        }
     })
 
-
-    fetchData(beerId)
+    fetchBeerSelection()
+    
+    
 });

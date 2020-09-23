@@ -3,12 +3,12 @@
     {
       "id": 1,
       "name": "Oh So Flattening",
-      "description": "This taste like... beer.",
+      "description": "This taste like... beer. But alright, go off.",
       "image_url": "https://i.ibb.co/wQ4G0w1/flatiron-brew.png",
       "reviews": [
-        "This is what? beer.",
-        "I like this a lot! ",
-        "This is good "
+        "This is what? nasty. ",
+        "This is what? beer. ",
+        "I like this a lot! "
       ]
     },
     {
@@ -52,7 +52,7 @@
     {
       "id": 6,
       "name": "AB:07",
-      "description": "Whisky cask-aged imperial scotch ale. Beer perfect for when the rain is coming sideways. Liquorice, plum and raisin temper the warming alcohol, producing a beer capable of holding back the Scottish chill.",
+      "description": "Good stuff",
       "image_url": "https://images.punkapi.com/v2/9.png",
       "reviews": [
         "I like to drink this while watching TV",
