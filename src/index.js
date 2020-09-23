@@ -1,1 +1,27 @@
-// Code here
+document.addEventListener('click', e => {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+})
