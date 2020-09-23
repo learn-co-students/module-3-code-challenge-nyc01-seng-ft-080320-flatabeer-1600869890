@@ -76,5 +76,5 @@ document.addEventListener('DOMContentLoaded', () =>{
     getReviews(beerId, newReview)
   }
   
-  getBeer(2)
+  getBeer(3)
 })
