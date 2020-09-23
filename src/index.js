@@ -1,12 +1,40 @@
 // As a user, I can:
 
-// See the first beer's details, including its name, image, description, and reviews, when the page loads
+// See the first beer's details, including its name, image, description, and reviews, when the page loads DONE
 // Change the beer's description and still see that change when reloading the page
 // Add a review for the beer (no persistence needed)
 
 document.addEventListener("DOMContentLoaded", () => {
 
     const BEERS_URL = "http://localhost:3000/beers/"
+
+    document.addEventListener("submit", (e) => {
+        if (e.target.matches(".description")) {
+            e.preventDefault();
+            patchDescription(e.target)
+        }
+    })
+
+    const patchDescription = beerForm => {
+        const newDesc = document.getElementById("textarea").value
+        const beerId = beerForm.dataset.beer_id
+
+        const patchObj = {description: newDesc}
+
+        const fetchOptions = {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Accepts": "application/json"
+            },
+            body: JSON.stringify(patchObj)
+        }
+
+        fetch(BEERS_URL+beerId, fetchOptions)
+        .then(response => response.json())
+        .then(renderBeer)
+
+    }
 
     const getBeer = (id) => {
         fetch(BEERS_URL+id)
@@ -20,8 +48,8 @@ document.addEventListener("DOMContentLoaded", () => {
             <h2>${beer.name}</h2>
             <img src="${beer.image_url}">
 
-            <form class="description">
-                <textarea>${beer.description}</textarea>
+            <form data-beer_id=${beer.id} class="description">
+                <textarea id="textarea">${beer.description}</textarea>
                 <button>Update Beer</button>
             </form>
 
@@ -52,26 +80,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
     getBeer(1);
 })
-
-
-{/* <div class="beer-details">
-<h2>Beer Name Goes Here</h2>
-<img src="assets/image-placeholder.jpg">
-
-<form class="description">
-  <textarea>Beer description goes here</textarea>
-  <button>Update Beer</button>
-</form>
-
-<h3>Leave a Review</h3>
-<form class="review-form">
-  <textarea></textarea>
-  <input type="submit" value="Submit">
-</form>
-
-<h3>Customer Reviews</h3>
-<ul class="reviews">
-  <li>Replace with actual reviews</li>
-  <li>From the server</li>
-</ul>
-</div> */}
