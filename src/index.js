@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 newReviewLi.innerText = review.value
                 const reviewUl = document.querySelector('.reviews')
                 reviewUl.append(newReviewLi)
+                form.reset()
                 //take contents from form and create new li and append to reviews ul
 
             }
