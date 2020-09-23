@@ -54,6 +54,14 @@ const firstBeer = 1
 
             })
         
+
+            // document.addEventListener('submit', e => {
+            //     if (e.target.matches('#update-beer-button'))
+            //     e.preventDefault();
+            //     console.log(e)
+            
+    
+            //     })
         formB.addEventListener('submit', e => {
             e.preventDefault();
             const form = e.target
