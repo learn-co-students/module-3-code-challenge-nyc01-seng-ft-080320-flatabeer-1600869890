@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    getFirstBeer()
+    getBeer(1)
     clickHandler()
 })
 
 const BASE_URL = 'http://localhost:3000/beers/'
 
-const getFirstBeer = () => {
-    fetch(BASE_URL + '1')
+const getBeer = (beerId) => {
+    fetch(BASE_URL + beerId)
     .then(resp => resp.json())
     .then(data => {
         renderBeer(data)
@@ -36,8 +36,11 @@ const renderBeer = (beerObj) => {
 const clickHandler = () => {
     document.addEventListener('click', e => {
         e.preventDefault()
+
         if (e.target.textContent === "Update Beer"){
             updateBeerDescription()
+        } else if (e.target.value === 'Submit'){
+            submitReview()
         }
         
     })
@@ -69,8 +72,22 @@ const sendPatchRequest = (beerId, descriptionNode) => {
     })
 }
 
+const submitReview = () => {
+    const reviewForm = document.querySelector('.review-form')
+    const newReview = reviewForm.querySelector('textarea').value
+
+    renderReview(newReview)
+}
+
+const renderReview = (review) => {
+    const reviewsUl = document.querySelector('.reviews')
+    const newReviewLi = document.createElement('li')
+    newReviewLi.textContent = review
+    reviewsUl.prepend(newReviewLi)
+}
+
 
 /*As a user, I can:
 √ See the first beer's details, including its **name, image, description, and reviews**, when the page loads
 √ Change the beer's description and **still see that change when reloading the page**
-- Add a review for the beer (no persistence needed) */
+√ Add a review for the beer (no persistence needed) */
