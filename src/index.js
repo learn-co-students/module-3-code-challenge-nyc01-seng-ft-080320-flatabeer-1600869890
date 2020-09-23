@@ -44,9 +44,11 @@ const render = beer =>{
        form[0].innerText = beer.description
        form.addEventListener("submit", e => {
            e.preventDefault()
-           if(e.target.innerText === "Update Beer") {
+           console.log(e.target)
+           if(e.target.textContent=== "Update Beer") {
             //    get the input and replace it with existing description
-               console.log(form.innerText)
+            
+               
              
            }
        })
