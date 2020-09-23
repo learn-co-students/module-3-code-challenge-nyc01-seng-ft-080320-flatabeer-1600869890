@@ -12,9 +12,11 @@ document.addEventListener('DOMContentLoaded', e => {
         .then(json => renderBeer(json))
 
     const renderBeer = (beer) => {
-        const info = qs('.beer-details')
-        const beerName = ce('div')
-        
+        const name = qs('#name')
+        const description = qs('#description')
+        document.getElementById("image").src=beer.image_url
+        name.textContent = beer.name
+        description.textContent = beer.description
+        image.scr = beer.img_url
     }
-
 })//dom content loaded
