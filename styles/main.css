@@ -99,3 +99,9 @@ textarea {
   padding: 20px;
   margin-bottom: 20px;
 }
+
+.delete {
+  float: right;
+  background-color: red;
+  
+}

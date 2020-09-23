@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         beerObj.reviews.forEach(review => {
             const reviewLi = document.createElement('li')
-            reviewLi.textContent = review
+            reviewLi.innerHTML = `${review} <button class="delete"> </button>`
             reviewsUl.appendChild(reviewLi)
         })
     }
@@ -78,17 +78,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
         reviewLi.textContent = newReview
        
         reviewsUl.insertBefore(reviewLi, reviewsUl.firstChild)
+        
+    }
+
+    const getReviews = () => {
+        const reviewsUl = document.querySelector(".reviews")
         let reviewArr = []
         const reviewChildren = reviewsUl.children
         for (let i =0; i < reviewChildren.length; i++) {
-            reviewArr.push(reviewChildren[i].textContent)
+            reviewArr.push(reviewChildren[i].innerText)
            
         }
        
         return reviewArr
     }
-
-
 
     document.addEventListener('submit', e => {
         e.preventDefault()
@@ -103,11 +106,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
             
             const reviewText = e.target.children[0].value
             const beerId = document.querySelector('.beer-details').children[0].getAttribute('data-id')
-            let reviewArr = addReview(reviewText)
+            addReview(reviewText)
             
-            patchReview(beerId, reviewArr)
+            patchReview(beerId, getReviews())
 
             e.target.reset()
+        }
+    })
+
+    document.addEventListener('click', e => {
+        if (e.target.matches(".delete")) {
+            const beerId = document.querySelector('.beer-details').children[0].getAttribute('data-id')
+            const reviewLi = e.target.parentNode
+            e.target.remove()
+            reviewLi.remove()
+
+            patchReview(beerId, getReviews())
+
         }
     })
 
