@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', e => {
 
     // setup submit handlers
     setupSubmitHandlers();
+
+    //setup click handler for delete review
+    setupDeleteReviewClickHandler();
 });
 
 function getURL(endpoint){
@@ -38,6 +41,7 @@ function displayBeer(beer, container){
     const reviewsList = container.querySelector('ul.reviews');
     const reviewFrm = container.querySelector('form.review-form');
 
+    container.dataset.beerId = beer.id;
     imageEl.src = beer.image_url;
     descEl.value = beer.description;
     descEl.parentElement.dataset.beerId = beer.id;
@@ -101,4 +105,24 @@ function buildOptions(method, headers, obj){
         headers: headers,
         body: JSON.stringify(obj)
     }
+}
+
+function setupDeleteReviewClickHandler(){
+    document.addEventListener('click', e=>{
+        if (e.target.matches('ul.reviews li')){
+            const reviewLi = e.target;
+            let answer = confirm('Are you sure you want to delete this review?');
+            if(answer){
+                const reviewsList = e.target.parentElement;
+                e.target.remove();
+                const updatedReviewsList = [...reviewsList.children];
+                //debugger;
+                const updatedReviews = updatedReviewsList.map(review => {return review.innerText});
+                const updatedReviewsObj = {reviews: updatedReviews};
+                const options = buildOptions('PATCH', getHeaders(), updatedReviewsObj);
+                dbBeer(getURL('beers/'+document.querySelector('div.beer-details').dataset.beerId),options);
+            }
+            
+        }
+    })
 }
