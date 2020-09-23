@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     getFirstBeer()
+    clickHandler()
 })
 
 const BASE_URL = 'http://localhost:3000/beers/'
@@ -21,6 +22,7 @@ const renderBeer = (beerObj) => {
 
     nameH2.textContent = beerObj.name 
     beerImage.src = beerObj.image_url
+    beerDesc.dataset.id = beerObj.id
     beerDesc.value = beerObj.description
     reviewsUl.innerHTML = ''
 
@@ -31,9 +33,44 @@ const renderBeer = (beerObj) => {
     })
 } 
 
+const clickHandler = () => {
+    document.addEventListener('click', e => {
+        e.preventDefault()
+        if (e.target.textContent === "Update Beer"){
+            updateBeerDescription()
+        }
+        
+    })
+}
+
+const updateBeerDescription = () => {
+    const descForm = document.querySelector('.description')
+    const currentDescNode = descForm.firstElementChild
+    const beerId = descForm.firstElementChild.dataset.id
+
+    sendPatchRequest(beerId, currentDescNode)
+}
+
+const sendPatchRequest = (beerId, descriptionNode) => {
+    const options = {
+        method: "PATCH",
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            description: descriptionNode.value
+        })
+    }
+    fetch(BASE_URL + beerId, options)
+    .then(resp => resp.json())
+    .then(data => {
+        descriptionNode.value = data.description
+    })
+}
 
 
 /*As a user, I can:
 √ See the first beer's details, including its **name, image, description, and reviews**, when the page loads
-- Change the beer's description and **still see that change when reloading the page**
+√ Change the beer's description and **still see that change when reloading the page**
 - Add a review for the beer (no persistence needed) */
