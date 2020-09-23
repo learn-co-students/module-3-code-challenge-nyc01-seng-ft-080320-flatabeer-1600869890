@@ -24,7 +24,7 @@ function renderBeer(beer){
 
         <h3>Leave a Review</h3>
         <form class="review-form" data-beer-id=${beer.id}>
-          <textarea></textarea>
+          <textarea name="review"></textarea>
           <input type="submit" value="Submit">
         </form>
 
@@ -63,7 +63,9 @@ function submitHandler(){
 };
 
 function review(form) {
-    console.log(document.querySelector(".review-form"))
+    
+    const reviewUl = document.querySelector("ul.reviews")
+    reviewUl.append(renderReview(form.review.value))
 }
 
 function updateBeer(newStuff){
