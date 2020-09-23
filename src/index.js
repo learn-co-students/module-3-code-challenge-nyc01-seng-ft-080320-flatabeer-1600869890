@@ -12,6 +12,11 @@ document.addEventListener('DOMContentLoaded', e => {
 
     //setup click handler for delete review
     setupDeleteReviewClickHandler();
+
+    //render Beer List
+    const beerList = document.querySelector('nav ul');
+    let listOfBeer = dbBeer(getURL('beers/'));
+    listOfBeer.then(beers => renderBeerList(beers, beerList));
 });
 
 function getURL(endpoint){
@@ -50,12 +55,12 @@ function displayBeer(beer, container){
     reviewFrm.dataset.beerId = beer.id;
 
     for(let review of beer.reviews){
-        reviewsList.appendChild(renderReview(review));
+        reviewsList.appendChild(renderElement(review));
     }
 
 }
 
-function renderReview(review){
+function renderElement(review){
     const revEl = document.createElement('li');
     revEl.textContent = review;
 
@@ -79,7 +84,7 @@ function setupSubmitHandlers(){
 
             const review = e.target.querySelector('textarea').value;
             if (review != ""){
-                reviewsList.appendChild(renderReview(review));
+                reviewsList.appendChild(renderElement(review));
             }
             
             console.log(reviewsList.children);
@@ -125,4 +130,11 @@ function setupDeleteReviewClickHandler(){
             
         }
     })
+}
+
+function renderBeerList(beers, container){
+    container.innerHTML="";
+    for(let beer of beers){
+        container.appendChild(renderElement(beer.name));
+    }
 }
