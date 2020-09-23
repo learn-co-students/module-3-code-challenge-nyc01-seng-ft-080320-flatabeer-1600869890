@@ -1,9 +1,25 @@
+//experimental:
+
+function ReviewBoi(id = null) {
+    this.id = id;
+    this.reviews = {};
+
+}
+ReviewBoi.prototype.init = function() {
+    this.reviews[this.id] = [];
+}
+
 //globz
+let reviewBoi = new ReviewBoi()
 const baseUrl = 'http://localhost:3000/beers/';
 
+//fnnies
 const loadBeer = (id) => {
     fetch(baseUrl + id).then(resp => resp.json()).then(beer => {
         renderBeer(beer)
+        reviewBoi.id = id;
+        //reviewBoi.init();
+        console.log('console log 1:', reviewBoi);
     })
 }
 
@@ -39,7 +55,8 @@ const renderReview = (review) => {
 
     reviewLi.innerText = `${review}`;
     reviewUl.appendChild(reviewLi);
-
+    //ahhh how do i got in dis hash
+    console.log('console log 2:', reviewBoi.reviews);
 }
 
 const clickHandler = () => {
@@ -63,7 +80,15 @@ const submitReview = () => {
     const reviewForm = document.querySelector('.review-form');
     const review = reviewForm.querySelector('textarea').value;
     renderReview(review);
-
+//come back
+    // const config = {
+    //     method: 'PATCH',
+    //     headers: {
+    //         'accept': 'application/json',
+    //         'content-type': 'application/json',
+    //     },
+    //     body: JSON.stringify({reviews: })
+    // }
 }
 
 const updateBeer = (form) => {
@@ -88,6 +113,7 @@ const updateBeer = (form) => {
 
 document.addEventListener('DOMContentLoaded', () =>
 {
+
     loadBeer(1);
     clickHandler();
     formHandler();
