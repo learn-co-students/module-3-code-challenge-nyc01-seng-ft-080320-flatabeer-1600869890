@@ -45,8 +45,10 @@ document.addEventListener("DOMContentLoaded", () =>{
         revs.forEach(rev => {
             const revLi = document.createElement("li")
             const reviewBox = document.querySelector(".reviews")
+            const deleteButton = document.createElement("button")
             reviewBox.append(revLi)
             revLi.textContent = rev
+            revLi.append(deleteButton)
         });
 
     }
@@ -87,8 +89,10 @@ document.addEventListener("DOMContentLoaded", () =>{
     const leaveReview = (e) => {
         const reviewBox = document.querySelector(".reviews")
         const newReview = document.createElement("li")
+        const deleteButton = document.createElement("button")
         reviewBox.append(newReview)
         newReview.textContent = e.value
+        newReview.append(deleteButton)
         arrReviewbox = []
         newReviewBox = [...reviewBox.children]
         newReviewBox.forEach(rev => {
