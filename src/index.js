@@ -20,14 +20,15 @@ const renderBeer = (beer) => {
     beerContainer.children[6].children[0].textContent = beer.reviews[0]
 }
 
-// Listening for the update event
+// // Listening for the update event
 const submitHandler = () => {
     document.addEventListener('submit', e => {
-    e.preventDefault()
+    
       let button = e.target[1]     
         
-        if (button.innerHTML === "Update Beer") {
-            let newDescription = e.target[0].textContent
+        if (e.target[1].textContent === "Update Beer") {
+            e.preventDefault()
+            let newDescription = e.target[0].value
                 
             let options = {
             method: 'PATCH',
@@ -38,17 +39,34 @@ const submitHandler = () => {
             body: JSON.stringify({
                 description: newDescription
             })
-        
         }
-
             fetch("http://localhost:3000/beers/1", options)
             .then(response => response.json())
-            .then(returnObject => console.log(returnObject))
-    
+            .then(returnObject => renderBeer(returnObject))
+        } if (e.target[1].value === "Submit") {
+            e.preventDefault()
+            let newReview = e.target[0].value
+            let reviewList = document.querySelector('.reviews')
+
+            let newLi = document.createElement('li')
+            newLi.textContent = newReview
+
+            reviewList.prepend(newLi)
+            console.log(newLi);
+            
+            
         }
         
-    
+
+
+    })
+}
+
+const addReview = () => {
+
+}
 
 submitHandler()
 getBeers()
+
 })
