@@ -39,8 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
         beerDiv.append(newBeerDiv)
         const beerUl = document.querySelector('.reviews')
         displayReviews(beer, beerUl)
-        
-        
     }
 
     const displayReviews = (beer, beerUl) => {
@@ -73,8 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const reviewUl = document.querySelector('.reviews')
                 reviewUl.append(newReviewLi)
                 form.reset()
-                //take contents from form and create new li and append to reviews ul
-
             }
 
         })
