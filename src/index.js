@@ -1,8 +1,10 @@
 // Code here
 document.addEventListener('DOMContentLoaded', () => {
     getFirstBeer()
+    // formHandler()
 })
-
+// 1. get the first beer 
+// render existing info on the page
 const getFirstBeer = () => {
     fetch("http://localhost:3000/beers/1")
     .then(response => response.json())
@@ -17,9 +19,10 @@ const render = beer =>{
     let img = document.getElementsByTagName('img')
     img[0].src = beer.image_url
     
-    const descriptionForm = document.querySelector(".description")
-    descriptionForm[0].innerText = beer.description
-    // descriptionForm.textContent = beer.description 
+    formHandler(beer)
+    // const descriptionForm = document.querySelector(".description")
+    // descriptionForm[0].innerText = beer.description
+    
 
     const reviews = beer.reviews
     const revUl = document.querySelector(".reviews") 
@@ -30,5 +33,25 @@ const render = beer =>{
     });
         
     
-
 }
+
+// 2. change beer description
+// update db with new description
+// see the updated description after reloading bthe page
+   const formHandler = beer => {
+       const form = document.querySelector(".description")
+       
+       form[0].innerText = beer.description
+       form.addEventListener("submit", e => {
+           e.preventDefault()
+           if(e.target.innerText === "Update Beer") {
+            //    get the input and replace it with existing description
+               console.log(form.innerText)
+             
+           }
+       })
+   }
+
+// 3. add a review 
+// update revies in db 
+// be able to added review
