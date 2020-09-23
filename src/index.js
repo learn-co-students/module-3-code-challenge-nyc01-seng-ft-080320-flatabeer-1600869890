@@ -23,7 +23,8 @@ function renderMenu(beers){
     const menuUl = document.querySelector(".beerList")
     for (let beer of beers){
         const beerLi = document.createElement("li")
-        beerLi.classList.add("specifc")
+        beerLi.classList.add("specific")
+        beerLi.dataset.beerId = beer.id
         beerLi.innerText= beer.name
         menuUl.append(beerLi)
     }
@@ -89,14 +90,21 @@ function clickHandler(){
         if (e.target.matches(".deleteReview")){
             deleteReview(e.target)
         }else if (e.target.matches(".specific")){
-            console.log(e.target.dataset.id)
+            getFirstBeer(e.target.dataset.beerId)
         }
     })
 }
 function deleteReview(button){
     const reviewLi = button.parentElement
     const beerId = button.parentElement.parentElement.dataset.beerId
-    // fetch(BASE_URL + beerId, {metho: "PATCH"})
+    
+    reviewLi.remove()
+    const reviews = button.parentElement.parentElement.querySelectorAll("li")
+    console.log(reviews)
+    for (review of reviews){
+        console.log(review.textContent)
+    }
+    // fetch(BASE_URL + beerId, {method: "PATCH"})
     // .then(resp => reviewLi.remove())
     // console.log(reviewLi, beerId)
 }

@@ -3,7 +3,7 @@
     {
       "id": 1,
       "name": "Oh So Flattening",
-      "description": "A light, crisp and bitter IPA brewed with English and American hops. A small batch brewed only once.\n SMOOTH AND DELICIOUS",
+      "description": "A light, crisp and bitter IPA brewed with English and American hops. A small batch brewed only once.\n SMOOTH AND ",
       "image_url": "https://i.ibb.co/wQ4G0w1/flatiron-brew.png",
       "reviews": [
         "It's flat! Just the way I like it!!",
@@ -62,7 +62,7 @@
     {
       "id": 8,
       "name": "Misspent Youth",
-      "description": "The brainchild of our small batch brewer, George Woods. A dangerously drinkable milk sugar- infused Scotch Ale.",
+      "description": "The brainchild of our small batch brewer, George Woods. A dangerously drinkable milk sugar- infused Scotch Ale. sound like childhood",
       "image_url": "https://images.punkapi.com/v2/keg.png",
       "reviews": [
         "Woe is me, how I long for the days of yore",
