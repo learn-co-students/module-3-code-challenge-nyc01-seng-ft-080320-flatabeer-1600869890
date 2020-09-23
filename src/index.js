@@ -32,7 +32,7 @@ function renderBeer(beer){
         <ul class="reviews">
         </ul>`;
     detailContainer.innerHTML=(beerBody);
-    detailContainer.querySelector("textarea").textContent = beer.description
+    detailContainer.querySelector("textarea").value = beer.description
     const reviewList = detailContainer.querySelector(".reviews");
     for (let review of beer.reviews){
         reviewList.append(renderReview(review))
@@ -67,7 +67,7 @@ function review(form) {
 }
 
 function updateBeer(newStuff){
-    console.log(newStuff.innerHTML)
+    let newDescription = (newStuff.description.value)
     
     
     const beerId = newStuff.dataset.beerId
@@ -78,7 +78,7 @@ function updateBeer(newStuff){
         body: JSON.stringify({description: newDescription})
     }
     
-    // fetch(BASE_URL + beerId, configuration)
-    // .then(resp => resp.json())
-    // .then(console.log)
+    fetch(BASE_URL + beerId, configuration)
+    .then(resp => resp.json())
+    .then(console.log)
 }
