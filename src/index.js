@@ -35,9 +35,12 @@ document.addEventListener('DOMContentLoaded', e => {
     }
   };
 
-  // const renderReview = (reviewUl, review) => {
-  //   const newReview = document.createElement()
-  // };
+  const renderReview = (reviewUl, review) => {
+    const newReview = document.createElement('li');
+    newReview.textContent = review;
+
+    reviewUl.append(newReview);
+  };
 
   fetchBeer(1);
 
