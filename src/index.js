@@ -23,6 +23,8 @@ const firstBeer = 1
         const descButton = beerDescForm.querySelector('button')
         descButton.id = "update-beer-button"
         descButton.type = "submit"
+        const reviewForm = document.querySelector('.review-form')
+        reviewForm.dataset.id = beer.id
         
 
         renderReviews(beer)
@@ -42,15 +44,23 @@ const firstBeer = 1
     }
 
     const submitHandler = () => {
-        const form = document.querySelector('.description')
-        form.addEventListener('submit', e => {
+        const formA = document.querySelector('.description')
+        const formB = document.querySelector('.review-form')
+
+        formA.addEventListener('submit', e => {
             e.preventDefault();
             const form = e.target
-            
             patchDesc(form)
 
             })
+        
+        formB.addEventListener('submit', e => {
+            e.preventDefault();
+            const form = e.target
+            postReview(form)
+        })
         }
+
 
     const patchDesc = form => {
         const objId = form.dataset.id
@@ -74,13 +84,20 @@ const firstBeer = 1
 
     }
 
-    const addReview = () => {
-        console.log('fuck this')
+    const postReview = form => {
+        const objId = form.dataset.id
+        const objDesc = form.querySelector('textarea')
+        const objUpdate = objDesc.value
+        const newReviewLi = document.createElement('li')
+        const reviewUL = document.querySelector('.reviews')
+        newReviewLi.textContent = objUpdate
+        reviewUL.appendChild(newReviewLi)
+
     }
 
      
    
-    addReview();
+    
     submitHandler();
     fetchBeer();
 
