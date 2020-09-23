@@ -1,8 +1,25 @@
-// Add a review for the beer (no persistence needed)
-
 document.addEventListener("DOMContentLoaded", () => {
 
     const BEERS_URL = "http://localhost:3000/beers/"
+
+    const getBeers = () => {
+        fetch(BEERS_URL)
+        .then(response => response.json())
+        .then(beers => renderBeerList(beers))
+    }
+
+    const renderBeerList = beers => {
+        let beerList = document.querySelector("nav").firstElementChild
+        beers.map(beer => {
+            let beerLi = document.createElement("li")
+            beerLi.textContent = beer.name
+            beerLi.classList.add("beer-list-item")
+            beerLi.dataset.id = beer.id
+            beerList.append(beerLi)
+        })
+    }
+
+
 
     document.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -18,7 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.target.matches(".delete-review")) {
             const beer_id = e.target.dataset.beer_id
             deleteReview(e.target.parentElement, beer_id)
+        } else if (e.target.matches(".beer-list-item")) {
+            getBeer(e.target.dataset.id)
         }
+
     })
 
     const deleteReview = (el, beerId) => {
@@ -175,6 +195,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
+    getBeers();
     getBeer(2);
 })
