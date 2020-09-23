@@ -18,7 +18,7 @@ const loadBeer = (id) => {
     fetch(baseUrl + id).then(resp => resp.json()).then(beer => {
         renderBeer(beer)
         reviewBoi.id = id;
-        //reviewBoi.init();
+        reviewBoi.init();
         console.log('console log 1:', reviewBoi);
     })
 }
