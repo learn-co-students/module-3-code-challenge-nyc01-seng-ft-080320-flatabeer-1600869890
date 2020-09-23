@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', e => {
  const dClass = document.querySelector('.beer-details')
  const url = "http://localhost:3000/beers/"
  const ulBeer = document.querySelector('.reviews')
- const form = document.querySelector('description')
+ //const form = document.querySelector('description')
  // name, image description and reviews
  const getBeers = () => {
   fetch(url + 1)
@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', e => {
    .then(beer => renderBeer(beer))
  }
  const renderBeer = beer => {
+  const beerDetail = document.querySelector('.beer-details')
+  beerDetail.dataset.beerId = beer.id
   const h2Tag = document.getElementsByTagName('h2')
   //h2Tag.textContent = `${beer.name}`
   //console.dir(dClass.children[1])
@@ -20,6 +22,7 @@ document.addEventListener('DOMContentLoaded', e => {
   formOne[0].value = `${beer.description}`
   //formOne[0]
   //console.log(beer)
+
 
 
 
@@ -34,40 +37,57 @@ document.addEventListener('DOMContentLoaded', e => {
 
 
 
-  //beer.reviews.forEach(reviews =>{renderReview(reviews)})
+  beer.reviews.forEach(review => { renderReview(review) })
  }
- const renderReview = reviews => {
-  //console.dir(reviews)
+ const renderReview = review => {
+  //console.log(ulBeer.children)
+  const myReviews = document.createElement('li')
+  myReviews.textContent = review
 
-  ulBeer.children[0].append(reviews)
+
+  ulBeer.append(myReviews)
  }
 
  const submitHandler = () => {
   document.addEventListener('submit', e => {
    e.preventDefault()
-   //console.log(e.target)
-   const form1 = e.target
-   e.target.dataset.id =
-    console.log(formId)
-   //console.log(form1[0].value)
-   const new_description = form1[0].value
-   const options = {
-    method: "PATCH",
-    headers: {
-     "content-type": "application/json",
-     "accept": "application/json"
-    },
-    body: JSON.stringify({ description: new_description })
+   if (e.target.className === 'description') {
+    //console.log(e.target)
+    const form1 = e.target
+    // e.target.dataset.id =
+    //console.log(formId)
+    //console.log(form1[0].value)
+    const new_description = form1[0].value
+    //console.log(document.querySelector('.beer-details').dataset.beerId)
+    const id = document.querySelector('.beer-details').dataset.beerId
+
+    //form1.reset()
+    const options = {
+     method: "PATCH",
+     headers: {
+      "content-type": "application/json",
+      "accept": "application/json"
+     },
+     body: JSON.stringify({ description: new_description })
+
+    }
+    fetch(url + id, options)
+     .then(res => res.json())
+     .then(console.log)
+
+
+
+
+   } if (e.target.className === 'review-form') {
+    //console.log(e.target)
+    const formTwo = e.target
+    const my_review = formTwo[0].value
+    const newLi = document.querySelector('li')
+    newLi.textContent = my_review
+    //console.log(my_review)
+    ulBeer.prepend(my_review)
 
    }
-   fetch(url + 1, options)
-    .then(res => res.json())
-    .then(console.log)
-
-
-
-
-
 
   })
 
@@ -75,16 +95,16 @@ document.addEventListener('DOMContentLoaded', e => {
  // didnt have much time to do the last
 
  // add an event listener to submit button 
- const clickHandler = () => {
-  document.addEventListener('click', e => {
+ // const clickHandler = () => {
+ //  document.addEventListener('click', e => {
 
-  })
- }
+ //  })
+ // }
 
 
 
 
  getBeers()
  submitHandler()
- clickHandler()
+ //clickHandler()
 })
