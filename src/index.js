@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const addReview = el => {
         const form = el
         // const beerDiv = form.parentElement
-        // const beerId = beerDiv.id
+        // const beerId = beerDiv.dataset.beerId
 
         const review = form.querySelector('textarea')
 
