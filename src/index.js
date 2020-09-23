@@ -24,9 +24,9 @@ const renderBeer = (beer) => {
 const submitHandler = () => {
     document.addEventListener('submit', e => {
     e.preventDefault()
-           
-        let button = e.target[1]
-            if (button.innerHTML === "Update Beer"){
+      let button = e.target[1]     
+        
+        if (button.innerHTML === "Update Beer"){
             let newDescription = e.target[0].textContent
                 
             let options = {
@@ -37,7 +37,7 @@ const submitHandler = () => {
                 },
             body: JSON.stringify({
                 description: newDescription
-            },
+            })}
 
             fetch("http://localhost:3000/beers/1", options)
             .then(response => response.json())
