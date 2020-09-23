@@ -99,3 +99,15 @@ textarea {
   padding: 20px;
   margin-bottom: 20px;
 }
+
+.btn-delete {
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  background-color: #f1a458;
+  color: #fff;
+  padding: 7px 10px;
+  cursor: pointer;
+  float: right;
+}
