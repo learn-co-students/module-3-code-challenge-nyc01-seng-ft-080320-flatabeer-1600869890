@@ -9,7 +9,10 @@
         "It's flat! Just the way I like it!!",
         "Is this the real beer, is this just fantasy?",
         "I've always hated bubbles going up my nose, so this is absolutely delightful.",
-        "Flat straight out of the bottle! No more waiting for the fizziness to subside. Thank you FlattaBeer!! I love you!!!"
+        "Flat straight out of the bottle! No more waiting for the fizziness to subside. Thank you FlattaBeer!! I love you!!!",
+        "Yummy flatness.",
+        "No bubbles to be found!",
+        "Smoooooth."
       ]
     },
     {
@@ -47,8 +50,7 @@
       "image_url": "https://images.punkapi.com/v2/7.png",
       "reviews": [
         "I lost my pet squirrel to this beer",
-        "Where's the beef?!",
-        "Also where's the garlic?"
+        "Where's the beef?!"
       ]
     },
     {
@@ -58,8 +60,7 @@
       "image_url": "https://images.punkapi.com/v2/9.png",
       "reviews": [
         "I like to drink this while watching TV",
-        "A beer like no other, best served hot",
-        "Delicious."
+        "A beer like no other, best served hot"
       ]
     },
     {
@@ -74,7 +75,7 @@
     {
       "id": 8,
       "name": "Misspent Youth",
-      "description": "The brainchild of our giant batch brewer, George Woods. A dangerously drinkable milk sugar- infused Scotch Ale.",
+      "description": "The brainchild of our small batch brewer, George Woods. A dangerously drinkable milk sugar- infused Scotch Ale.",
       "image_url": "https://images.punkapi.com/v2/keg.png",
       "reviews": [
         "Woe is me, how I long for the days of yore",
