@@ -49,13 +49,13 @@ document.addEventListener('DOMContentLoaded', e => {
     }
 
     const submitHandler = () => {
-        document.addEventListener('submit', e => {
+        form = qs('.review-form')
+        form.addEventListener('submit', e => {
             e.preventDefault()
-                const reviewForm = e.target.previousElementSibling.value
-                
+                const reviewForm = form.value
                 const reviews = qs('#reviews')
-                const newReview = ce("li")
-                newReview.textContent = reviewForm
+                const newReview = ce('li')
+                newReview.innerHtml = reviewForm
                 reviews.append(newReview)
            
         })}
