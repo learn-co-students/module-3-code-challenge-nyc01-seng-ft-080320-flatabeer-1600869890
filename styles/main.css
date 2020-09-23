@@ -99,3 +99,7 @@ textarea {
   padding: 20px;
   margin-bottom: 20px;
 }
+
+.deleteReview{
+  float: right;
+}

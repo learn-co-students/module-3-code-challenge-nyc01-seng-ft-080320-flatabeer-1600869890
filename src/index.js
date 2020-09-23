@@ -1,15 +1,33 @@
 // Code here
 const BASE_URL = "http://localhost:3000/beers/"
 document.addEventListener('DOMContentLoaded', e=>{
-    getFirstBeer();
+    getFirstBeer(1);
     submitHandler();
+    clickHandler();
+    getAllBeers();
 })
 
 
-function getFirstBeer(){
-    fetch(BASE_URL + 1)
+function getFirstBeer(num){
+    fetch(BASE_URL + num)
     .then(resp => resp.json())
     .then(beer => renderBeer(beer))
+}
+function getAllBeers(){
+    fetch(BASE_URL)
+    .then(resp=> resp.json())
+    .then(beers => renderMenu(beers))
+}
+
+function renderMenu(beers){
+    const menuUl = document.querySelector(".beerList")
+    for (let beer of beers){
+        const beerLi = document.createElement("li")
+        beerLi.classList.add("specifc")
+        beerLi.innerText= beer.name
+        menuUl.append(beerLi)
+    }
+
 }
 
 function renderBeer(beer){
@@ -29,7 +47,7 @@ function renderBeer(beer){
         </form>
 
         <h3>Customer Reviews</h3>
-        <ul class="reviews">
+        <ul class="reviews" data-beer-id=${beer.id}>
         </ul>`;
     detailContainer.innerHTML=(beerBody);
     detailContainer.querySelector("textarea").value = beer.description
@@ -42,6 +60,10 @@ function renderBeer(beer){
 function renderReview(review){
     const reviewLi = document.createElement("li");
     reviewLi.textContent = review;
+    const deleteButton = document.createElement("button")
+    deleteButton.classList.add("deleteReview")
+    deleteButton.textContent="DELETE"
+    reviewLi.append(deleteButton)
     return reviewLi
 }
 
@@ -62,6 +84,22 @@ function submitHandler(){
     })
 };
 
+function clickHandler(){
+    document.addEventListener("click", e=>{
+        if (e.target.matches(".deleteReview")){
+            deleteReview(e.target)
+        }else if (e.target.matches(".specific")){
+            console.log(e.target.dataset.id)
+        }
+    })
+}
+function deleteReview(button){
+    const reviewLi = button.parentElement
+    const beerId = button.parentElement.parentElement.dataset.beerId
+    // fetch(BASE_URL + beerId, {metho: "PATCH"})
+    // .then(resp => reviewLi.remove())
+    // console.log(reviewLi, beerId)
+}
 function review(form) {
     
     const reviewUl = document.querySelector("ul.reviews")
