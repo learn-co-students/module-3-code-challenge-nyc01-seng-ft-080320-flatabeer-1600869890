@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', e => {
   //console.log(beer)
 
 
+
   beer.reviews.forEach(reviews => { renderReview(reviews) })
 
 
@@ -46,8 +47,24 @@ document.addEventListener('DOMContentLoaded', e => {
    e.preventDefault()
    //console.log(e.target)
    const form1 = e.target
+   e.target.dataset.id =
+    console.log(formId)
    //console.log(form1[0].value)
-   const old_description = form1[0].value = 
+   const new_description = form1[0].value
+   const options = {
+    method: "PATCH",
+    headers: {
+     "content-type": "application/json",
+     "accept": "application/json"
+    },
+    body: JSON.stringify({ description: new_description })
+
+   }
+   fetch(url + 1, options)
+    .then(res => res.json())
+    .then(console.log)
+
+
 
 
 
@@ -55,6 +72,7 @@ document.addEventListener('DOMContentLoaded', e => {
   })
 
  }
+ // didnt have much time to do the last
 
 
 
