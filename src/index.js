@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainBody = document.querySelector('main')
     const updateForm = document.querySelector('.description')
     let reviewForm = document.querySelector('.review-form')
-    let beerReviews = []
+    const beerNav = document.getElementById('nav-ul')
     
 
     function getFirstBeer() {
@@ -13,11 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(beer => {
             mainBody.innerHTML = ''
             renderBeer(beer)
-            beer.reviews.forEach (review => {
-                beerReviews.push(review)
             })
-        })
-    }
+        }
 
     function renderBeer(beer) {
         let newDiv = document.createElement('div')
@@ -79,6 +76,31 @@ document.addEventListener('DOMContentLoaded', () => {
         commentForm.reset();
     }
 
+    function renderBeerNav(beer) {
+        newLi = document.createElement('li')
+        newLi.dataset.id = beer.id
+        newLi.id = beer.name
+        newLi.textContent = beer.name
+        beerNav.appendChild(newLi)
+    }
+
+    function getAllBeers() {
+        fetch(BEER_URL)
+        .then(resp => resp.json())
+        .then(beers => {
+            beers.forEach (beer => 
+                renderBeerNav(beer))
+        })
+    }
+    function getBeer(beer) {
+        fetch(BEER_URL + '/' + beer)
+        .then(resp => resp.json())
+        .then(resp => {
+            mainBody.innerHTML = ''
+            renderBeer(resp)
+            })
+        }
+
     submitHandler = () => {
         document.addEventListener('submit', e => {
             e.preventDefault();
@@ -95,9 +117,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target.matches('#delete')) {
                 e.target.parentElement.remove();
             }
+            if (e.target.parentNode.matches("#nav-ul")) {
+                getBeer(e.target.dataset.id)
+            }
         })
     }
     clickHandler();
     submitHandler();
     getFirstBeer();
+    getAllBeers();
 })
