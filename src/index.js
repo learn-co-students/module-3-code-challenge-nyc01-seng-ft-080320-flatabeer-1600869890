@@ -8,9 +8,8 @@ const urlBeer1 = "http://localhost:3000/beers/1"
     submitHandler();
     })
     //create a fetch request (get) to get all of the beer data from api
-
     const fetchBeer = url => {
-
+        
         fetch(url)
         .then(response => response.json())
         .then(beerObj => {
@@ -56,13 +55,16 @@ const urlBeer1 = "http://localhost:3000/beers/1"
             reviewList.append(reviewLis);
         }
     }
-
+    
     //submit handler for the description update
     const submitHandler = () => {
         document.addEventListener('submit', e => {
             e.preventDefault();
             if (e.target.matches('.description')) {
                 updateDescription(e.target);
+        //add a submit handle for the reviews
+            } else if(e.target.matches('.review-form')) {
+                postNewReview(e.target)
             }
         })
     }
@@ -70,7 +72,8 @@ const urlBeer1 = "http://localhost:3000/beers/1"
     const updateDescription = form => {
         //const beerId = form.dataset.beerId;
         const description = form.description.value;
-        console.dir(description);
+        
+        //console.dir(description);
 
         const options = {
             method: "PATCH",
@@ -78,15 +81,27 @@ const urlBeer1 = "http://localhost:3000/beers/1"
                 "content-type": "application/json",
                 "accept": "application/json"
             },
-            body: JSON.stringify(description)
-        }
+            body: JSON.stringify({
+                description: description
+            })
+        };
 
         fetch(urlBeer1, options)
         .then(response => response.json())
-        .then()
+        .then(beerUpdate => {
+            removePreviousDiv();
+            renderBeer(beerUpdate);
+            renderReviews(beerUpdate);
+        })
     }
     //remove the old description on DOM and re-render the new description
+    const removePreviousDiv = () => {
+        const main = document.querySelector('main');
+        main.innerHTML = ""
+    }
 
+    //function to post a new review on DOM
+    //no persistence required
 
 
 
