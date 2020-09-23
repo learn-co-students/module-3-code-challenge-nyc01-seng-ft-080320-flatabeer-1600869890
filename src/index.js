@@ -21,18 +21,31 @@ const renderBeer = (beer) => {
 }
 
 // Listening for the update event
-    const submitHandler = () => {
-        document.addEventListener('click', (e) => {
-           console.log(e.target)
-            // if (e.target.value === "UPDATE BEER"){
-            //     e.preventDefault()
-            //     console.log('Updating')
-            // } if (e.target.value === "SUBMIT") {
-            //     e.preventDefault()
-            //     console.log('Submitting');
-            // }
-        })
-    }
+const submitHandler = () => {
+    document.addEventListener('submit', e => {
+    e.preventDefault()
+           
+        let button = e.target[1]
+            if (button.innerHTML === "Update Beer"){
+            let newDescription = e.target[0].textContent
+                
+            let options = {
+            method: 'PATCH',
+            headers: {
+                "content-type": "application/json",
+                "accept": "application/json"
+                },
+            body: JSON.stringify({
+                description: newDescription
+            },
+
+            fetch("http://localhost:3000/beers/1", options)
+            .then(response => response.json())
+            .then(returnObject => console.log(returnObject))
+    
+        }
+        
+    
 
 submitHandler()
 getBeers()
