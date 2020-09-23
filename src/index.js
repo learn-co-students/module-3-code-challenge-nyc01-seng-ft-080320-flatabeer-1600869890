@@ -126,8 +126,7 @@ document.addEventListener("DOMContentLoaded", () =>{
         document.addEventListener("click", e => {
 
             if(e.target.matches(".beer-button")){
-                var beerId = e.target.id
-                getFirstBeer(beerId)
+                getFirstBeer(e.target.id)
             }
             
         })
