@@ -73,12 +73,14 @@ document.addEventListener("DOMContentLoaded", () => {
         // const beerId = beerDiv.dataset.beerId
 
         const review = form.querySelector('textarea')
-
-        const newReviewLi = document.createElement('li')
-        newReviewLi.innerText = review.value
-        const reviewUl = document.querySelector('.reviews')
-        reviewUl.append(newReviewLi)
-        form.reset()
+        if(review.value !== ''){
+            const newReviewLi = document.createElement('li')
+            newReviewLi.innerText = review.value
+            const reviewUl = document.querySelector('.reviews')
+            reviewUl.append(newReviewLi)
+            form.reset()
+        }
+       
     }
 
     const updateDescription = el => {
