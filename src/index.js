@@ -74,12 +74,17 @@ document.addEventListener('DOMContentLoaded', e => {
  }
  // didnt have much time to do the last
 
+ // add an event listener to submit button 
+ const clickHandler = () => {
+  document.addEventListener('click', e => {
 
-
+  })
+ }
 
 
 
 
  getBeers()
  submitHandler()
+ clickHandler()
 })
