@@ -44,8 +44,6 @@ function displayBeer(beer, container){
 
     reviewsList.innerHTML = "";
     reviewFrm.dataset.beerId = beer.id;
-    //in case we need it not sure yet...
-    reviewFrm.dataset.beerReviews = beer.reviews;
 
     for(let review of beer.reviews){
         reviewsList.appendChild(renderReview(review));
@@ -79,6 +77,14 @@ function setupSubmitHandlers(){
             if (review != ""){
                 reviewsList.appendChild(renderReview(review));
             }
+            
+            console.log(reviewsList.children);
+            const updatedReviewsList = [...reviewsList.children];
+            //debugger;
+            const updatedReviews = updatedReviewsList.map(review => {return review.innerText});
+            const updatedReviewsObj = {reviews: updatedReviews};
+            const options = buildOptions('PATCH', getHeaders(), updatedReviewsObj);
+            dbBeer(getURL('beers/'+e.target.dataset.beerId),options);
         }
     })
 }
