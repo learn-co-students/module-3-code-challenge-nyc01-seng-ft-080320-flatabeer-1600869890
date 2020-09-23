@@ -27,23 +27,50 @@ document.addEventListener("DOMContentLoaded", function(e){
 
     const getBeer = () =>{
         const beerContainer = document.querySelector('.beer-details')
-        beerContainer.dataset.id = "1"
         const id = beerContainer.dataset.id
         console.log(id)
         
-        fetch('http://localhost:3000/beers/' + id)
+        fetch('http://localhost:3000/beers/1')
         .then(response => response.json())
         .then(beer => 
             renderBeer(beer),
-            renderReviews(beer))
+            // renderReviews(beer)
+            )
             
+    }
+
+    //Update description
+
+    const updateDescription = () =>{
+        const updateForm = document.querySelector('form')
+        document.addEventListener('submit', function(e){
+            e.preventDefault()
+            if (e.target === updateForm){
+                const newDescription = document.querySelector('textarea').value
+                
+                const options = {
+                    method: 'PATCH',
+                    headers: {
+                        "content-type": "application/json",
+                        "accept": "application/json"
+                    },
+                    body: JSON.stringify({description: newDescription})
+                }
+
+                fetch('http://localhost:3000/beers/1', options)
+                .then(response => response.json())
+                .then(beer => console.log(beer));
+                
+            }
+
+        })
     }
 
     //Function Invocations
     // renderBeer()
     getBeer()
     // renderReviews()
-
+    updateDescription()
 })
 
 
