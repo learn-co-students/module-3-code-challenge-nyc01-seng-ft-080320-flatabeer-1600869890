@@ -29,9 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
         ul.innerHTML = ""
 
         for(const review of reviews){
-            const li = document.createElement('li')
-            li.textContent = review
-            ul.append(li)
+            // const li = document.createElement('li')
+            // li.textContent = review
+            // ul.append(li)
+            const div = document.createElement('div')
+            div.innerHTML =`
+                <li>${review} <button>delete</button> </li>
+            `
+            ul.append(div)
         }
         
     }
@@ -85,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         fetch(baseUrl + firstBeerId, options)
         .then(resp => resp.json())
+        .then
         // .then(beer => console.log(beer))
     }
 
