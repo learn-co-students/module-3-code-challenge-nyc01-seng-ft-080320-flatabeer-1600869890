@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const newDesc = textArea.textContent
                 const beerDetailsDiv = document.querySelector('.beer-details')
                 const beerId = beerDetailsDiv.dataset.id
-
+                // get the beerId
 
                 
                 let options = {
@@ -61,11 +61,16 @@ document.addEventListener('DOMContentLoaded', () => {
             
                 fetch(baseUrl + beerId, options)
                 .then(res => res.json())
-                .then(fetchBeers)
+                .then(fetchBeers())
                 
             }
         })
     }
+
+    // Add a review for the beer
+        // add submit listener
+        // create new li
+        // make content = to li value
 
 
 
