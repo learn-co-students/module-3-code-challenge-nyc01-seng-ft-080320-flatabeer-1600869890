@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () =>{
     beerDetails.querySelector('.description').querySelector('textarea').innerText = beerObj.description
 
     for (let i = 0; i < beerObj.reviews.length; i++) {
-      displayReview(beerObj.reviews[i], i)
+      displayReview(beerObj.reviews[i])
     }
   }
 
