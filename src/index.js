@@ -1,7 +1,3 @@
-// As a user, I can:
-
-// See the first beer's details, including its name, image, description, and reviews, when the page loads DONE
-// Change the beer's description and still see that change when reloading the page
 // Add a review for the beer (no persistence needed)
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -9,14 +5,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const BEERS_URL = "http://localhost:3000/beers/"
 
     document.addEventListener("submit", (e) => {
+        e.preventDefault();
         if (e.target.matches(".description")) {
-            e.preventDefault();
             patchDescription(e.target)
+        } else if (e.target.matches(".review-form")) {
+            addReview(e.target)
+            e.target.reset()
         }
     })
 
+    const addReview = reviewForm => {
+        const newReviewText = document.getElementById("review-area").value
+        console.log(newReviewText)
+
+        // no persistance
+        const reviewUl = document.querySelector(".reviews")
+        const reviewLi = document.createElement("li")
+        reviewLi.textContent = newReviewText
+        reviewUl.append(reviewLi)
+    }
+
     const patchDescription = beerForm => {
-        const newDesc = document.getElementById("textarea").value
+        const newDesc = document.getElementById("desc-area").value
         const beerId = beerForm.dataset.beer_id
 
         const patchObj = {description: newDesc}
@@ -49,13 +59,13 @@ document.addEventListener("DOMContentLoaded", () => {
             <img src="${beer.image_url}">
 
             <form data-beer_id=${beer.id} class="description">
-                <textarea id="textarea">${beer.description}</textarea>
+                <textarea id="desc-area">${beer.description}</textarea>
                 <button>Update Beer</button>
             </form>
 
             <h3>Leave a Review</h3>
-            <form class="review-form">
-                <textarea></textarea>
+            <form data-beer_id=${beer.id} class="review-form">
+                <textarea id="review-area"></textarea>
                 <input type="submit" value="Submit">
             </form>
 
@@ -63,11 +73,11 @@ document.addEventListener("DOMContentLoaded", () => {
             <ul class="reviews">
             </ul>
         `
-        addReviews(beer, beerDiv);
+        appendReviews(beer, beerDiv);
 
     }
 
-    const addReviews = (beerObj, beerDiv) => {
+    const appendReviews = (beerObj, beerDiv) => {
         const reviewUl = beerDiv.querySelector("ul")
         const reviews = beerObj.reviews
         for (const review of reviews) {
