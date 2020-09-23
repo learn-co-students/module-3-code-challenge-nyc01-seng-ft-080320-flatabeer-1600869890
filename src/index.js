@@ -47,12 +47,16 @@ document.addEventListener('DOMContentLoaded', () => {
         `
     }
 
+    // add Click Handlers and Submit Handlers for the update beer and reviews
     const clickHandler = () => {
         document.addEventListener('click', e => {
             if(e.target.textContent === 'UPDATE BEER'){
                 const beerForm = document.querySelector('.description')
                 beerForm.innerText = beer.description.value
-            }else if(e.target.matches)
+            }else if(e.target.textContent === 'SUBMIT'){
+                const reviewForm = document.querySelector('.review-form')
+                reviewForm.innerText = beer.reviews.value
+            }
         })
     }
     const submitHandler = () => {
@@ -67,15 +71,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const options = {
             method: "PATCH",
             headers: {
-                "content-type"
-            }
+                "content-type" : "application/json"
+                "accept" : "application/json"
+            },
+            body: JSON.stringify(beer)
         }
+        fetch(baseUrl + 1, options)
+        .then(response => response.json())
+        .then()
 
 
         })
     }
 
-
+    //call the functions down here
+    submitHandler()
     clickHandler()
     getBeer()
     renderBeer()
