@@ -13,6 +13,18 @@ document.addEventListener("DOMContentLoaded", function(e){
         const description = beerContainer.querySelector('form').firstElementChild.textContent = `${beerObj.description}`
     }
 
+    const renderReviews = (beerObj) => {
+        const reviewsUl = document.querySelector('.reviews')
+        const  oldLis = reviewsUl.querySelectorAll('li')
+            oldLis.forEach(li => li.remove())
+        const arrayTest = ["hi", "meal", "ear"]
+        for (i = 0; i < beerObj.reviews.length; i++) {
+            const reviewLi = document.createElement('li');
+            reviewLi.textContent = beerObj.reviews[i];
+            reviewsUl.append(reviewLi)
+          }
+    }
+
     const getBeer = () =>{
         const beerContainer = document.querySelector('.beer-details')
         beerContainer.dataset.id = "1"
@@ -21,12 +33,16 @@ document.addEventListener("DOMContentLoaded", function(e){
         
         fetch('http://localhost:3000/beers/' + id)
         .then(response => response.json())
-        .then(beer => renderBeer(beer))
+        .then(beer => 
+            renderBeer(beer),
+            renderReviews(beer))
+            
     }
 
     //Function Invocations
     // renderBeer()
     getBeer()
+    // renderReviews()
 
 })
 
