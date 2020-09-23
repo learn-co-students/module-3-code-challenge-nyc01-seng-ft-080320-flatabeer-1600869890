@@ -57,7 +57,35 @@ document.addEventListener('DOMContentLoaded', () => {
         li.textContent = newReview
         reviewUl.append(li)
         
-        // saveReview(newReview)
+        updateReviews(newReview)
+    }
+
+    const updateReviews = (newReview) => {
+
+        fetch(baseUrl + firstBeerId)
+        .then(resp => resp.json())
+        .then(beer => ( saveReviews(newReview, beer.reviews)))
+    }
+
+    const saveReviews = (newReview, beerReviews) => {
+        beerReviews.push(newReview)
+        
+        reviews = {
+            reviews: beerReviews
+        }
+
+        let options = {
+            method: "PATCH",
+            headers: {
+                "content-type": "application/json",
+                "accept": "application/json"
+            },
+            body: JSON.stringify(reviews)
+        }
+
+        fetch(baseUrl + firstBeerId, options)
+        .then(resp => resp.json())
+        // .then(beer => console.log(beer))
     }
 
     const updateDescription = target => {
