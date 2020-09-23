@@ -19,10 +19,9 @@ document.addEventListener('DOMContentLoaded', () =>{
     }
   }
 
-  function displayReview(review, index) {
+  function displayReview(review) {
     const newLi = document.createElement('li')
     newLi.innerText = review
-    newLi.id = index
     document.querySelector('.reviews').append(newLi)
     const button = document.createElement('button')
     button.className = 'btn-delete'
@@ -95,8 +94,7 @@ document.addEventListener('DOMContentLoaded', () =>{
   }
 
   function addReview(beerId, newReview) {
-    const index = document.querySelector('.reviews').lastChild.id
-    displayReview(newReview, parseInt(index)+1)
+    displayReview(newReview)
     getReviews(beerId, newReview)
   }
   
