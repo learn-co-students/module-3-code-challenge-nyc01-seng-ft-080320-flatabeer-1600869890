@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', e => {
         document.querySelector('h2').textContent = beer.name
         document.querySelector('img').src = beer.image_url
         document.querySelector('textarea').textContent = beer.description
-        document.querySelector('.reviews li').textContent = beer.reviews
+        document.querySelector('.reviews').textContent = beer.reviews
+
     }
 
     const submitHandler = () => {
