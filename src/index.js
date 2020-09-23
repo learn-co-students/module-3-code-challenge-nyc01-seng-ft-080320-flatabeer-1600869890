@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', e => {
     const qs = (selector) => document.querySelector(selector)
     const ce = (element) => document.createElement(element)
 
-    const URL = 'http://localhost:3000/beers/'
     const URL1 = 'http://localhost:3000/beers/1'
 
     fetch(URL1)
@@ -28,40 +27,42 @@ document.addEventListener('DOMContentLoaded', e => {
         })
     }
 
-    const clickHandler = () => {
-        document.addEventListener('click', e => {
+        const clickHandler = () => {
+            document.addEventListener('click', e => {
+                e.preventDefault()
+                if (e.target.matches('button')) {
+                    const descriptionForm = e.target.previousElementSibling.value
+                    console.log(descriptionForm)
+            
+                    fetch(`http://localhost:3000/beers/1`, {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: JSON.stringify({
+                    "description": descriptionForm
+                    })
+                })
+                }
+        })
+    }
+
+    const submitHandler = () => {
+        document.addEventListener('submit', e => {
             e.preventDefault()
-            if (e.target.matches('button')) {
-                const descriptionForm = e.target
-                patchBeer(descriptionForm)
-        
-            } else if (e.target.matches('#new-object-form')) {
-                const newForm = e.target
-                postObject(newForm)
-            }
+                const reviewForm = e.target.previousElementSibling.value
+                
+                const reviews = qs('#reviews')
+                const newReview = ce("li")
+                newReview.textContent = reviewForm
+                reviews.append(newReview)
+           
         })}
 
-        const patchBeer = (form, reset = false) => {
-            let id = form.id.value
-            let newBeer = parseInt(form.beer.value)
-        
-            const newBeer = {
-                "description": form.description.value,
-            }
-        
-            const options = {
-                method: 'PATCH',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(newBeer)
-            }
-        
-            fetch(URL1, options)
-                .then(resp => resp.json())
-                .then(renderBeer)
-        }
+        submitHandler()
 
+    
 
 
         clickHandler()
