@@ -35,16 +35,16 @@ document.addEventListener("DOMContentLoaded", event => {
                 event.preventDefault()
 
                   const newBeerDescription = document.querySelector("")
-                  //happy-path plan => on 'click' event on the update beer, event.preventDefault() if called, preventing form from going through;
+                  //happy-path plan => on 'click' event on the update beer, event.preventDefault() is called, preventing form from going through;
                   //new textarea content in the form would be kept and sent over as a PATCH request to the API
-                    //const pathBeerDescription(updatedBeerInfo)
+                  //const pathBeerDescription(updatedBeerInfo)
                     
-              }
+            };
 
-        })
+        });
          
         //make PATCH request
-    }
+    };
     //  pathBeerDescription = (updatedBeerInfo) = {
         // const options = {
             //method: "PATCH",
@@ -54,13 +54,14 @@ document.addEventListener("DOMContentLoaded", event => {
             // "accepts": "application/json"
             // },    
             //body: JSON.stringify()
-            
         // }  
+
         // const beerId = updatedBeerInfo.id 
         // fetch(`http://localhost:3000/beers/` + beerId, options)
         // .then(response => response.json())
+        // .then(newBeerDetail => firstBeerDetails(newBeerDetail))
 
-    // }
+    //  }
 
 
 
