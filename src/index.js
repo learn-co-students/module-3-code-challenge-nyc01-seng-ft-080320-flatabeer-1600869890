@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const baseUrl = "http://localhost:3000/beers/"
 
-    const getBeer = () => {
+    const getBeer = () => { //the first beer
         fetch(baseUrl + 1)
         .then(response => response.json())
         .then(beer => renderBeer(beer))
@@ -19,6 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
 // to show the details of a single beer
     const renderBeer = beer => {
         const beerDiv = document.querySelector('.beer-details')
+        const name = document.querySelector('h2')
+        const description = document.querySelector('.description')
+        const review = document.querySelector('.reviews')
+
+        //tried using textContent but beer.name didn't go through. wasn't sure what went wrong, so went with this instead.
+
         beerDiv.innerHTML = `
         <h2>${beer.name}</h2>
         <img src=${beer.image_url}>
@@ -41,6 +47,36 @@ document.addEventListener('DOMContentLoaded', () => {
         `
     }
 
+    const clickHandler = () => {
+        document.addEventListener('click', e => {
+            if(e.target.textContent === 'UPDATE BEER'){
+                const beerForm = document.querySelector('.description')
+                beerForm.innerText = beer.description.value
+            }else if(e.target.matches)
+        })
+    }
+    const submitHandler = () => {
+        const descriptionForm = document.querySelector('description')
+
+
+        form.addEventListener('submit', e => {
+        e.preventDefault()
+            const description = descriptionForm.description.value
+
+
+        const options = {
+            method: "PATCH",
+            headers: {
+                "content-type"
+            }
+        }
+
+
+        })
+    }
+
+
+    clickHandler()
     getBeer()
     renderBeer()
 })
