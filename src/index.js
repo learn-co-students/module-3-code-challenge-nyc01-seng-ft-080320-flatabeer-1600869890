@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () =>{
         fetch(baseUrl)
         .then(resp => resp.json())
         .then(beers => {
-           
             renderBeers(beers)})
     }
 
@@ -30,13 +29,12 @@ document.addEventListener("DOMContentLoaded", () =>{
         liTag.id = e.id
         liTag.className = "beer-button"
         liTag.innerText = e.name
-        console.log(ulTag)
     }
 
 
-    const getFirstBeer = () => {
+    const getFirstBeer = (e = `1`) => {
 
-        fetch(baseUrl + `1`)
+        fetch(baseUrl + `${e}`)
         .then(resp => resp.json())
         .then(beer => renderFirstBeer(beer))
 
@@ -126,15 +124,19 @@ document.addEventListener("DOMContentLoaded", () =>{
 
     const clickHandler = () => {
         document.addEventListener("click", e => {
-            e.preventDefault();
 
-            if(e.target.matches())
+            if(e.target.matches(".beer-button")){
+                var beerId = e.target.id
+                getFirstBeer(beerId)
+            }
+            
         })
 
 
     }
 
     //run
+    clickHandler();
     submitHandler();
     getFirstBeer();
     getBeers();
