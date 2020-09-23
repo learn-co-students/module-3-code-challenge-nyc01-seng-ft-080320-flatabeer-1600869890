@@ -55,7 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const reviewUl = document.querySelector('.reviews')
         const li = document.createElement('li')
         li.textContent = newReview
-        reviewUl.append(li)    
+        reviewUl.append(li)
+        
+        // saveReview(newReview)
     }
 
     const updateDescription = target => {
@@ -76,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             body: JSON.stringify(description)
         }
 
-        fetch(`http://localhost:3000/beers/1`, options)
+        fetch(baseUrl + firstBeerId, options)
         .then(resp => resp.json())
         .then(beer => renderBeer(beer))
     }
@@ -108,5 +110,4 @@ document.addEventListener('DOMContentLoaded', () => {
 // - Add a review for the beer (no persistence needed)
 //1. submit listner
 //2. get new review
-//3. post request ??
 //4. render on page
