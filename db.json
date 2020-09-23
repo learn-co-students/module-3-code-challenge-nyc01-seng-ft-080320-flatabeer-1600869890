@@ -3,7 +3,7 @@
     {
       "id": 1,
       "name": "Oh So Flattening",
-      "description": "I could use a beer...",
+      "description": "I could use a beer......",
       "image_url": "https://i.ibb.co/wQ4G0w1/flatiron-brew.png",
       "reviews": [
         "It's flat! Just the way I like it!!",
@@ -18,7 +18,9 @@
         "?!!? beer",
         "eafaffas",
         "Is it too early?",
-        "noon?"
+        "noon?",
+        "need to delete some comments!",
+        ""
       ]
     },
     {

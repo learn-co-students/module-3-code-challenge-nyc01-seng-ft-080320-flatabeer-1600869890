@@ -3,8 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const baseUrl = 'http://localhost:3000/beers/'
     const firstBeerId = 1
 
-    const getBeerOne = url => {
-        
+    const getBeerOne = url => {    
         fetch(url + firstBeerId)
         .then(resp => resp.json())
         .then(beer => renderBeer(beer))
@@ -20,8 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const beerReviews = beer.reviews
 
-        renderReviews(beerReviews)
-        
+        renderReviews(beerReviews)   
     }
 
     const renderReviews = reviews => {
@@ -34,11 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // ul.append(li)
             const div = document.createElement('div')
             div.innerHTML =`
-                <li>${review} <button>delete</button> </li>
+                <li>${review} <button class="delete">&times</button> </li>
             `
             ul.append(div)
-        }
-        
+        }    
     }
 
     const submitListner = () => {
@@ -64,7 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // reviewUl.append(li)
         const div = document.createElement('div')
         div.innerHTML =`
-            <li>${newReview} <button>delete</button> </li>
+            <li>${newReview}</li>
+            <button class="delete">&times</button>
         `
         reviewUl.append(div)
         
@@ -73,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const updateReviews = (newReview) => {
-
         fetch(baseUrl + firstBeerId)
         .then(resp => resp.json())
         .then(beer => ( saveReviews(newReview, beer.reviews)))
@@ -97,7 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         fetch(baseUrl + firstBeerId, options)
         .then(resp => resp.json())
-        .then
         // .then(beer => console.log(beer))
     }
 
@@ -124,14 +120,24 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(beer => renderBeer(beer))
     }
 
+    const clickListner = () => {
+        document.addEventListener('click', e => {
+            if(e.target.matches(".delete")){
+                deleteReview(e.target)
+            }
+        })
+    }
+
+    const deleteReview = target => {
+        const review = target.closest('li').textContent
+        const reviewDiv = target.closest('div')
+        console.log(review, reviewDiv)
+    }
+
+    clickListner()
     submitListner()
     getBeerOne(baseUrl)
 })
-
-
-
-
-
 
 
 // As a user, I can:
