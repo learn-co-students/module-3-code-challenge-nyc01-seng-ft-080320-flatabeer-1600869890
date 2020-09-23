@@ -30,11 +30,12 @@ document.addEventListener('DOMContentLoaded', () =>{
     if(e.target.className == 'description'){
       updateBeerDesc(e.target.parentNode.id, e.target.firstElementChild.value)
     }else if(e.target.className == 'review-form'){
-      console.log(e.target.className)
+      addReview(e.target.parentNode.id, e.target.firstElementChild.value)
+      e.target.reset()
     }
   })
+
   function updateBeerDesc(beerId, desc) {
-    console.log(beerId, desc)
     const options = {
       method: 'PATCH',
       headers: {
@@ -45,9 +46,35 @@ document.addEventListener('DOMContentLoaded', () =>{
         description: desc
       })
     }
-    
+
     fetch(`http://localhost:3000/beers/${beerId}`, options)
   }
+
+  function getReviews(beerId, newReview) {
+    fetch(`http://localhost:3000/beers/${beerId}`)
+      .then(resp => resp.json())
+      .then(data => updateReview(beerId, data.reviews, newReview))
+  }
+
+  function updateReview(beerId, reviews, newReview) {
+    reviews.push(newReview)
+    const options = {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json'
+      },
+      body: JSON.stringify({
+        reviews
+      })
+    }
+    fetch(`http://localhost:3000/beers/${beerId}`, options)
+  }
+
+  function addReview(beerId, newReview) {
+    displayReview(newReview)
+    getReviews(beerId, newReview)
+  }
   
-  getBeer(1)
+  getBeer(2)
 })
