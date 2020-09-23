@@ -28,8 +28,9 @@ document.addEventListener('DOMContentLoaded', e => {
     
     removeReviews();
 
-    for (let review of beer.reviews) {
-      renderReview(review);
+    // not using for...of loop here because I need the index later
+    for (let i = 0; i < beer.reviews.length; i++) {
+      renderReview(i, beer.reviews[i]);
     }
   };
 
@@ -39,11 +40,20 @@ document.addEventListener('DOMContentLoaded', e => {
     }
   };
 
-  const renderReview = (review) => {
+  const renderReview = (i, review) => {
     const newReview = document.createElement('li');
     newReview.textContent = review;
 
+    
+    const deleteButton = document.createElement('button');
+    deleteButton.className = 'delete';
+    deleteButton.dataset.reviewIndex = i;
+    deleteButton.textContent = 'Delete';
+    
+
+    reviewUl.append(deleteButton);
     reviewUl.append(newReview);
+
   };
 
   const updateBeerDesc = () => {
@@ -85,12 +95,37 @@ document.addEventListener('DOMContentLoaded', e => {
 
   };
 
+  const deleteReview = (reviewIndex) => {
+    // using patch here, not delete, since we're updating an entry rather than deleting one
+    // if the api included a review model, I'd use a delete request to the appropriate review
+    const reviewForm = document.querySelector('.review-form');   
+    const beerId = parseInt(reviewForm.parentElement.dataset.id, 10);
+    const reviewsLis = Array.from(reviewUl.querySelectorAll('li'));
+    const reviews = reviewsLis.map(li => li.textContent);
+
+    reviews.splice(reviewIndex, 1);
+
+    fetch(`${baseURL}/${beerId}`, {
+      method: "PATCH",
+      headers: headers,
+      body: JSON.stringify({
+        reviews: reviews
+      })
+    })
+      .then(resp => resp.json())
+      .then(json => renderBeer(json));
+  };
+
   const clickHandler = () => {
     document.addEventListener('click', e => {
       if (e.target.matches('button')) {
         e.preventDefault();
-
-        updateBeerDesc();
+        
+        if (e.target.parentElement.matches('.description')) {
+          updateBeerDesc();
+        } else if (e.target.matches('.delete')) {
+          deleteReview(e.target.dataset.reviewIndex);
+        }
       }
     });
 

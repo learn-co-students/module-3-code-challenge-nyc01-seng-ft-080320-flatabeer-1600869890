@@ -82,7 +82,7 @@ textarea {
   margin-bottom: 10px;
 }
 
-.description button, input[type="submit"] {
+.description button, input[type="submit"], .delete {
   border: none;
   font-size: 16px;
   font-weight: 600;
@@ -91,6 +91,13 @@ textarea {
   color: #fff;
   padding: 7px 10px;
   cursor: pointer;
+}
+
+.delete {
+  float: right;
+  margin-top: 15px;
+  margin-right: 5px;
+  border-radius: 5px;
 }
 
 .reviews li {
