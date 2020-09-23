@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', e => {
   const baseURL = 'http:localhost:3000/beers';
+  const reviewUl = document.querySelector('.reviews');
   const headers = {
     "Content-Type": "application/json",
     "Accept": "application/json"
@@ -24,23 +25,21 @@ document.addEventListener('DOMContentLoaded', e => {
     const descForm = deetsDiv.querySelector('.description');
     const descBox = descForm.querySelector('textarea');
     descBox.value = beer.description;    
-
-    const reviewUl = deetsDiv.querySelector('.reviews');
     
-    removeReviews(reviewUl);
+    removeReviews();
 
     for (let review of beer.reviews) {
-      renderReview(reviewUl, review);
+      renderReview(review);
     }
   };
 
-  const removeReviews = (reviewUl) => {
+  const removeReviews = () => {
     while (reviewUl.firstElementChild) {
       reviewUl.firstElementChild.remove();
     }
   };
 
-  const renderReview = (reviewUl, review) => {
+  const renderReview = (review) => {
     const newReview = document.createElement('li');
     newReview.textContent = review;
 
@@ -49,7 +48,6 @@ document.addEventListener('DOMContentLoaded', e => {
 
   const updateBeerDesc = () => {
     const editForm = document.querySelector('.description');
-
     const beerId = parseInt(editForm.parentElement.dataset.id, 10);
     const editedDesc = editForm.querySelector('textarea').value;
 
@@ -64,6 +62,29 @@ document.addEventListener('DOMContentLoaded', e => {
       .then(json => renderBeer(json));
   };
 
+  const updateBeerReviews = () => {
+    const reviewForm = document.querySelector('.review-form');   
+    const beerId = parseInt(reviewForm.parentElement.dataset.id, 10);
+    const newReview = reviewForm.querySelector('textarea').value;
+
+    const reviewsLis = Array.from(reviewUl.querySelectorAll('li'));
+    const reviews = reviewsLis.map(li => li.textContent);
+    
+    reviews.push(newReview);
+    reviewForm.querySelector('textarea').value = '';
+
+    fetch(`${baseURL}/${beerId}`, {
+      method: "PATCH",
+      headers: headers,
+      body: JSON.stringify({
+        reviews: reviews
+      })
+    })
+      .then(resp => resp.json())
+      .then(json => renderBeer(json));
+
+  };
+
   const clickHandler = () => {
     document.addEventListener('click', e => {
       if (e.target.matches('button')) {
@@ -71,6 +92,12 @@ document.addEventListener('DOMContentLoaded', e => {
 
         updateBeerDesc();
       }
+    });
+
+    document.addEventListener('submit', e => {
+      e.preventDefault();
+
+      updateBeerReviews();
     });
   };
 
