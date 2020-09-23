@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', e => {
     const firstBeer = dbBeer(getURL('beers/1'));
     firstBeer.then(beer => displayBeer(beer, beerProfile));
 
-    // setup click handlers
-    //setupClickHandlers();
+    // setup submit handlers
+    setupSubmitHandlers();
 });
 
 function getURL(endpoint){
@@ -20,6 +20,7 @@ function getURL(endpoint){
 }
 
 function dbBeer(url, options){
+    console.log('querying: ', url, 'with options: ', options);
     if(options){
         return fetch(url, options)
             .then(res => res.json())
@@ -35,10 +36,16 @@ function displayBeer(beer, container){
     const imageEl = container.querySelector('img');
     const descEl = container.querySelector('form.description textarea');
     const reviewsList = container.querySelector('ul.reviews');
+    const reviewFrm = container.querySelector('form.review-form');
 
     imageEl.src = beer.image_url;
     descEl.value = beer.description;
+    descEl.parentElement.dataset.beerId = beer.id;
+
     reviewsList.innerHTML = "";
+    reviewFrm.dataset.beerId = beer.id;
+    //in case we need it not sure yet...
+    reviewFrm.dataset.beerReviews = beer.reviews;
 
     for(let review of beer.reviews){
         reviewsList.appendChild(renderReview(review));
@@ -53,3 +60,32 @@ function renderReview(review){
     return revEl;
 }
 
+function setupSubmitHandlers(){
+    document.addEventListener('submit', e => {
+        if(e.target.matches('form.description')){
+            e.preventDefault();
+            const textArea =  e.target.querySelector('textarea');
+            const descObj = {'description': textArea.value};
+            const updateDescOptions = buildOptions('PATCH', getHeaders(), descObj);
+            const updatedBeer = dbBeer(getURL('beers/'+e.target.dataset.beerId), updateDescOptions);
+            console.log(updatedBeer);
+        }else if(e.target.matches('form.review-form')){
+            e.preventDefault();
+            console.log('submitting a review....');
+        }
+    })
+}
+function getHeaders(){
+    return {
+        'content-type': 'application/json',
+        'accept': 'application/json'
+    }
+}
+
+function buildOptions(method, headers, obj){
+    return {
+        method: method,
+        headers: headers,
+        body: JSON.stringify(obj)
+    }
+}
