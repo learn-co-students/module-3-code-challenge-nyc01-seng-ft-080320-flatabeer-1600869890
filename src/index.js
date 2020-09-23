@@ -15,8 +15,13 @@ const firstBeer = 1
         const beerIMG = beerDetailsPage.querySelector('img')
         beerIMG.src = beer.image_url
         const beerDescForm = beerDetailsPage.querySelector('.description')
+        beerDescForm.dataset.id = beer.id
         const description = beerDescForm.querySelector('textarea')
         description.innerText = beer.description
+        const descButton = beerDescForm.querySelector('button')
+        descButton.id = "update-beer-button"
+        descButton.type = "submit"
+
 
         renderReviews(beer)
     }
@@ -34,29 +39,39 @@ const firstBeer = 1
 
     }
 
+    const submitHandler = () => {
+        const form = document.querySelector('.description')
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            const form = e.target
+            patchDesc(form)
 
-    
-    
+            })
+        }
+
+    const patchDesc = form => {
+        const objId = form.dataset.id
+        objDesc = form.querySelector('textarea')
+        
+    //     const options = {
+    //         method: "PATCH",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "Accept" : "application/json"
+    //         },
+    //         body: JSON.stringify{(e.)}
+    //     }
+    }
+
+
+     
+   
+
+    submitHandler();
     fetchBeer();
 
 
 })
     // Code here
 
-
-
-
-
-// See the first beer's details, including its name, image, description, and reviews, when the page loads
-//              When DOM CONTENT loaded I can see the first beer and all its info
-//              render it up.
-
-
-// Change the beer's description and still see that change when reloading the page
-
-    //this is the patch request girl! breathe. 
-
-
-// Add a review for the beer (no persistence needed)
-// core deliverable - just made a form and hit submit. 
-//      this is the post. so you will need more than one description available. this will require an iterator?
+// honestly I am really pissed that I just spent 50 minutes because I tried to add an event listener in the wrong place and I 100% couldve delivered this perfectly. 
