@@ -129,12 +129,21 @@ function setupDeleteReviewClickHandler(){
             }
             
         }
+        if(e.target.matches('nav ul li')){
+            //get beer from API
+            let beer = dbBeer(getURL('beers/'+e.target.dataset.beerId));
+            //beer.then(displayBeer(beer, container))
+            
+            //displayBeer()
+        }
     })
 }
 
 function renderBeerList(beers, container){
     container.innerHTML="";
     for(let beer of beers){
-        container.appendChild(renderElement(beer.name));
+        let beerLI = renderElement(beer.name);
+        beerLI.dataset.beerId = beer.id;
+        container.appendChild(beerLI);
     }
 }
