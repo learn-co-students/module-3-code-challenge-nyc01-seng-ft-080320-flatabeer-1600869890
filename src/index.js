@@ -55,8 +55,15 @@ const formHandler = () => {
             updateBeer(e.target);
         } else if (e.target.matches('.review-form')){
             //console.log('submit')
+            submitReview()
         }
     })
+}
+const submitReview = () => {
+    const reviewForm = document.querySelector('.review-form');
+    const review = reviewForm.querySelector('textarea').value;
+    renderReview(review);
+
 }
 
 const updateBeer = (form) => {
@@ -64,16 +71,18 @@ const updateBeer = (form) => {
     const beerId = updateButton.dataset.beerId;
     const description = form.querySelector('textarea');
     const config = {
-        method: 'Patch',
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
-            'Accepts': 'application/json',
+            'Accept': 'application/json',
         },
-        body: JSON.stringify({description: `${description.value}`})
+        body: JSON.stringify({'description': `${description.value}`})
     }
 
-    fetch(baseUrl + beerId, config).then(resp => resp.json).then(updatedBeer => {
-        console.log(updatedBeer);
+    fetch(baseUrl + beerId, config).then(resp => resp.json()).then(updatedBeer => {
+        //console.log(updatedBeer);
+        alert("Description Updated!");
+        // not rendering since the text the user just updated with stays in descrip box
     });
 }
 
