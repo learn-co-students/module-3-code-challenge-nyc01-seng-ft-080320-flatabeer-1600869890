@@ -94,6 +94,7 @@ function clickHandler(){
         }
     })
 }
+
 function deleteReview(button){
     const reviewLi = button.parentElement
     const beerId = button.parentElement.parentElement.dataset.beerId
