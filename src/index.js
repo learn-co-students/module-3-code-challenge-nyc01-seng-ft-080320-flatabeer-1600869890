@@ -3,14 +3,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const baseUrl = 'http://localhost:3000/beers/'
     const firstBeerId = 1
 
-    const getBeerOne = url => {    
-        fetch(url + firstBeerId)
+    const getBeer= (url, id) => {    
+        fetch(url + id)
         .then(resp => resp.json())
         .then(beer => renderBeer(beer))
     }
 
     const renderBeer = beer => {
         const beerDetailDiv = document.querySelector('.beer-details')
+        beerDetailDiv.dataset.beerId = beer.id
         const beerHeader = beerDetailDiv.querySelector('h2').textContent = beer.name
         const beerImg = beerDetailDiv.querySelector('img').src = beer.image_url
 
@@ -27,14 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
         ul.innerHTML = ""
 
         for(const review of reviews){
-            // const li = document.createElement('li')
-            // li.textContent = review
-            // ul.append(li)
-            const div = document.createElement('div')
-            div.innerHTML =`
-                <li>${review} <button class="delete">&times</button> </li>
-            `
-            ul.append(div)
+            const li = document.createElement('li')
+            li.textContent = review
+            const button = document.createElement('button')
+            button.textContent = 'x'
+            button.className = "delete"
+        
+            ul.append(li)
+            li.append(button)
         }    
     }
 
@@ -53,31 +54,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const form = target
         const textArea = target.querySelector('textarea')
         const newReview = textArea.value
-
-        const reviewUl = document.querySelector('.reviews')
-        // const li = document.createElement('li')
-        // li.textContent = newReview
-
-        // reviewUl.append(li)
-        const div = document.createElement('div')
-        div.innerHTML =`
-            <li>${newReview}</li>
-            <button class="delete">&times</button>
-        `
-        reviewUl.append(div)
         
         updateReviews(newReview)
         form.reset()
     }
 
     const updateReviews = (newReview) => {
-        fetch(baseUrl + firstBeerId)
+        const beerId = document.querySelector('.beer-details').dataset.beerId
+        
+        fetch(baseUrl + beerId)
         .then(resp => resp.json())
-        .then(beer => ( saveReviews(newReview, beer.reviews)))
+        // .then(beer => ( saveReviews(newReview, beer.reviews)))
+        .then(beer => {
+            beer.reviews.push(newReview)
+            saveReviews(beer.reviews)
+        })
     }
 
-    const saveReviews = (newReview, beerReviews) => {
-        beerReviews.push(newReview)
+    const saveReviews = (beerReviews) => {
+        const id = document.querySelector('.beer-details').dataset.beerId
         
         reviews = {
             reviews: beerReviews
@@ -91,17 +86,17 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify(reviews)
         }
-
-        fetch(baseUrl + firstBeerId, options)
+        
+        fetch(baseUrl + id, options)
         .then(resp => resp.json())
-        // .then(beer => console.log(beer))
+        .then(beer => renderReviews(beer.reviews))
     }
 
     const updateDescription = target => {
-        const form = target
         const textArea = target.querySelector('textarea')
         const newDescription = textArea.value
-        
+        const beerId = document.querySelector('.beer-details').dataset.beerId
+
         description = {
             description: newDescription
         }
@@ -115,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
             body: JSON.stringify(description)
         }
 
-        fetch(baseUrl + firstBeerId, options)
+        fetch(baseUrl + beerId, options)
         .then(resp => resp.json())
         .then(beer => renderBeer(beer))
     }
@@ -124,20 +119,53 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('click', e => {
             if(e.target.matches(".delete")){
                 deleteReview(e.target)
+            }else if (e.target.matches('.side-beer')){
+                const beerId = e.target.dataset.beerId
+                getBeer(baseUrl, beerId)
             }
         })
     }
 
     const deleteReview = target => {
-        const review = target.closest('li').textContent
-        const reviewDiv = target.closest('div')
-        console.log(review, reviewDiv)
-        debugger
+        const beerId = document.querySelector('.beer-details').dataset.beerId
+        const review = target.parentElement.textContent.slice(0, -1)
+        
+        fetch(baseUrl + beerId)
+        .then(resp => resp.json())
+        .then(beer => editDeletedReview(beer.reviews, review))
     }
 
+    const editDeletedReview = (reviews, reviewToDelete) => {
+        updatedReviews = []
+        for(review of reviews) {
+            if(review !== reviewToDelete) {
+                updatedReviews.push(review)
+            }
+        }
+        saveReviews(updatedReviews)
+    }
+
+    renderAllBeers = () => {
+        const ul = document.querySelector('ul')
+        ul.innerHTML = ""
+
+        fetch(baseUrl)
+        .then(resp => resp.json())
+        .then(beers => {
+            for(beer of beers) {
+                const li = document.createElement('li')
+                li.className = "side-beer"
+                li.dataset.beerId = beer.id
+                li.textContent = beer.name
+                ul.append(li)
+            }
+        })
+    }
+
+    renderAllBeers()
     clickListner()
     submitListner()
-    getBeerOne(baseUrl)
+    getBeer(baseUrl, firstBeerId) 
 })
 
 

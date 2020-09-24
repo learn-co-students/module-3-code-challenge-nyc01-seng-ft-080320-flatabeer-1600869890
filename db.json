@@ -9,18 +9,7 @@
         "It's flat! Just the way I like it!!",
         "Is this the real beer, is this just fantasy?",
         "I've always hated bubbles going up my nose, so this is absolutely delightful.",
-        "Flat straight out of the bottle! No more waiting for the fizziness to subside. Thank you FlattaBeer!! I love you!!!",
-        "hmmmm?",
-        "working?!",
-        "I am hungry!",
-        "???",
-        "??>>",
-        "?!!? beer",
-        "eafaffas",
-        "Is it too early?",
-        "noon?",
-        "need to delete some comments!",
-        ""
+        "Flat straight out of the bottle! No more waiting for the fizziness to subside. Thank you FlattaBeer!! I love you!!!"
       ]
     },
     {
@@ -103,11 +92,12 @@
     {
       "id": 10,
       "name": "Movember",
-      "description": "A deliciously robust, black malted beer with a decadent dark, dry cocoa flavour that provides an enticing backdrop to the Cascade hops.",
+      "description": "A deliciously robust, black malted beer with a decadent dark, dry cocoa flavour that provides an enticing backdrop to the Cascade hops. Almost time! ",
       "image_url": "https://images.punkapi.com/v2/13.png",
       "reviews": [
         "Like autumn leaves readying themselves for the winter sun",
-        "Beep beep, you're having a beer"
+        "Beep beep, you're having a beer",
+        "This beer is the best!"
       ]
     }
   ]
